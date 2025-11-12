@@ -1,0 +1,61 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: lightblue;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+
+    max-width: 900px;
+    margin: auto;
+    background: lightgray;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgb(0, 0, 0.2);
+}
+
+h1 {
+
+    color: rgb(41, 40, 40);
+
+}
+
+a.button {
+
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 0;
+    background: rgb(0, 94, 255);
+    border-radius: 4px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+a.button:hover {
+
+    background: rgb(0, 60, 255); ;
+}
+
+
+.table {
+
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+
+}
+
+table th {
+
+    background: rgb(0, 94, 255);
+    color: white;
+
+}
+
+.actions a {
+
+    text-decoration: none;
+    margin-right: 10px;
+    
+}
