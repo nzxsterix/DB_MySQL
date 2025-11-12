@@ -130,10 +130,10 @@ DELETE from prodotti WHERE id = 6;
 
     creo tabella ->  CREATE TABLE appartamenti (
                      id INT AUTO_INCREMENT PRIMARY KEY,
-                     interno VARCHAR(10),
-                     piano INT,
-                     metri_quadri DECIMAL(6,2),
-                     proprietario VARCHAR(100)
+                     interno VARCHAR(10) NOT NULL,
+                     piano INT NOT NULL,
+                     metri_quadri DECIMAL(6,2) NOT NULL,
+                     proprietario VARCHAR(35) NOT NULL
                     );
 
 //inserimento di dati, popolarlo
