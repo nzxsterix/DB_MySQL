@@ -58,7 +58,7 @@ WHERE nome = 'Mario';
 
 // CANCELLARE DATABASE
 
-DROP DATABASE nome_database
+DROP DATABASE nome_database;
 
 
 
@@ -66,5 +66,5 @@ DROP DATABASE nome_database
 
 //esercizio query
 
-//mostrare tutti i propdotti disponibili
+//mostrare tutti i prodotti disponibili
 //elencare tutti i prodotti di una categoria a vs.scelta
