@@ -9,11 +9,26 @@ USE 'nome_db;
 CREATE TABLE   nome_tabella (
 
    id INT AUTO_INCREMENT PRIMARY KEY,
-   nome VARCHAR(10),
+   nome VARCHAR(10) NOT NULL,     -> NOT NULL vuol dire obbligatorio
    cognome VARCHAR(10),
    eta INT 
 
 );
+
+esempio
+
+CREATE TABLE prodotti (
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(10) NOT NULL,
+    categoria VARCHAR(30) NOT NULL,
+    prezzo DECIMAL(10,2) NOT NULL,
+    quantita INT NOT NULL DEFAULT 0,
+    disponibile BOOLEAN NOT NULL DEFAULT TRUE
+
+);
+
+INSERT INTO prodotti (nome, categoria, prezzo, quantita, disponibilità)
 
 //------------------INSERIMENTO DATI IN UNA TABELLA-------------------------
 
@@ -43,5 +58,13 @@ WHERE nome = 'Mario';
 
 // CANCELLARE DATABASE
 
-DROP DATABASE nome_database 
+DROP DATABASE nome_database
 
+
+
+
+
+//esercizio query
+
+//mostrare tutti i propdotti disponibili
+//elencare tutti i prodotti di una categoria a vs.scelta
