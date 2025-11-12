@@ -190,6 +190,12 @@ DELETE from prodotti WHERE id = 6;
     SET metri_quadri = 95.00
     WHERE interno = '101';
 
+//aggiungere 5mq a tutti gli appartamenti del primo piano
+
+    UPDATE appartamenti
+    set metri_quadri = metri_quadri + 5
+    WHERE piano = 1;
+
 
 //cancellare un dato (un interno)
 
