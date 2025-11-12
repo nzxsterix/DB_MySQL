@@ -207,3 +207,15 @@ DELETE from prodotti WHERE id = 6;
 
     DELETE FROM appartamenti
     WHERE metri_quadri < 80;
+
+
+///////////////////////////////////////////////////--- FOREIGN KEY --- ///////////////////////////////////////////
+
+
+
+table appartamenti                              table inquilini                     CREO UNA "FOREIGN KEY" CHE COLLEGA LE DUE TABELLA
+
+ID INT AUTO_INCREMENT PRIMARY KEY               ID INT AUTO_INCREMENT PRIMARY KEY 
+
+                                                id_appartamento INT 
+                                                FOREIGN KEY (id_appartamento) REFERENCES appartamenti(id);
