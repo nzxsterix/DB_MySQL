@@ -42,7 +42,7 @@
             <button type="submit">Salva</button>
         </form>
 
-        <a href="ordini.php">Torna alla lista ordini</a>
+        <a href="ordini.php" class="button">Torna alla lista ordini</a>
     </div>
 
 </body>
