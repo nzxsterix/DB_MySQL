@@ -67,4 +67,9 @@ DROP DATABASE nome_database;
 //esercizio query
 
 //mostrare tutti i prodotti disponibili
+
+SELECT * FROM 'prodotti' WHERE disponibile = TRUE;
+
 //elencare tutti i prodotti di una categoria a vs.scelta
+
+SELECT * FROM 'prodotti' WHERE categoria = 'INFORMATICA';
