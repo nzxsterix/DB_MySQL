@@ -1,75 +1,203 @@
 // COMANDI MYSQL
 
+
+//-------------------CREARE IL DATABASE-------------
+
+    CREATE 'nome_db';
+
 //-------------------USARE O SCEGLIERE IL DATABASE-------------
 
-USE 'nome_db;
+    USE 'nome_db;
 
 //------------------CREARE UNA TABELLA-------------------------
 
-CREATE TABLE   nome_tabella (
-
-   id INT AUTO_INCREMENT PRIMARY KEY,
-   nome VARCHAR(10) NOT NULL,     -> NOT NULL vuol dire obbligatorio
-   cognome VARCHAR(10),
-   eta INT 
-
-);
-
-esempio
-
-CREATE TABLE prodotti (
+    CREATE TABLE   nome_tabella (
 
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(10) NOT NULL,
-    categoria VARCHAR(30) NOT NULL,
-    prezzo DECIMAL(10,2) NOT NULL,
-    quantita INT NOT NULL DEFAULT 0,
-    disponibile BOOLEAN NOT NULL DEFAULT TRUE
+    nome VARCHAR(10) NOT NULL,     -> NOT NULL vuol dire obbligatorio
+    cognome VARCHAR(10),
+    eta INT 
 
-);
+    );
 
-INSERT INTO prodotti (nome, categoria, prezzo, quantita, disponibilità)
+    esempio
+
+    CREATE TABLE prodotti (
+
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(10) NOT NULL,
+        categoria VARCHAR(30) NOT NULL,
+        prezzo DECIMAL(10,2) NOT NULL,
+        quantita INT NOT NULL DEFAULT 0,
+        disponibile BOOLEAN NOT NULL DEFAULT TRUE
+
+    );
+
+    INSERT INTO prodotti (nome, categoria, prezzo, quantita, disponibilità)
 
 //------------------INSERIMENTO DATI IN UNA TABELLA-------------------------
 
-INSERT INTO nome_tabella (nome,cognome,eta)
+    INSERT INTO nome_tabella (nome,cognome,eta)
 
-VALUES ('Mario', 'Rossi', 35),
-       ('Luigi', 'Bianchi', 45),
-       ('Pippo', 'Paperino', 65)
+    VALUES ('Mario', 'Rossi', 35),
+        ('Luigi', 'Bianchi', 45),
+        ('Pippo', 'Paperino', 65)
+
+
+    INSERT INTO prodotti (nome, categoria, prezzo, quantita, disponibile) VALUES
+    ('Laptop, 'Informatica', 999.99, 3, TRUE),
+    ('Mouse', 'Informatica', 79.90, 10, TRUE),
+    ('TV', 'Elettronica', 699.00, 2, TRUE),
+    ('Smartphone', 'Telefonia', 349.00, 7, TRUE),
+    ('Stampante', 'Informatica', 129.90, 0, FALSE),
+    ('Frigorifero', 'Elettrodomestici', 1199.00, 5, TRUE),
+    ('Cuffie', 'Audio', 399.00, 1, TRUE);
 
 
 //------------------LEGGERE I DATI-------------------------
 
-SELECT * FROM  nome_tabella WHERE eta >= 18;
-SELECT * FROM  nome_tabella WHERE nome >= 'Mario';
+    SELECT * FROM  nome_tabella WHERE eta >= 18;
+    SELECT * FROM  nome_tabella WHERE nome >= 'Mario';
 
 //------------------AGGIORNARE I DATI-------------------------
 
-UPDATE nome_tabella
-SET eta = 36
-WHERE nome = 'Mario';
+    UPDATE nome_tabella
+    SET eta = 36
+    WHERE nome = 'Mario';
 
 //------------------CANCELLARE UN DATO-------------------------
 
-DELETE FROM nome_tabella 
-WHERE nome = 'Mario';
+    DELETE FROM nome_tabella 
+    WHERE nome = 'Mario';
 
 
 // CANCELLARE DATABASE
 
-DROP DATABASE nome_database;
+    DROP DATABASE nome_database;
 
 
-
-
-
-//esercizio query
+//------------------ESERCIZIO QUERY--------------------------
 
 //mostrare tutti i prodotti disponibili
 
-SELECT * FROM 'prodotti' WHERE disponibile = TRUE;
+    SELECT * FROM 'prodotti' WHERE disponibile = TRUE;
 
 //elencare tutti i prodotti di una categoria a vs.scelta
 
-SELECT * FROM 'prodotti' WHERE categoria = 'INFORMATICA';
+    SELECT * FROM 'prodotti' WHERE categoria = 'INFORMATICA';
+
+
+//MOSTRARE IL NOME E IL PREZZO E LA QUANTITà DEI PRODOTTI CON QUANTITà MINORE DI 5
+
+    SELECT nome, prezzo, quantita FROM prodotti where quantita < 5;
+
+
+//ORDINO TUTTI I PRODOTTI PER PREZZO DECRESCENTE
+
+    SELECT * FROM prodotti ORDER BY prezzo DESC;      //per crescente (ASC)
+
+
+// TROVARE I PRODOTTI CON PREZZO COMPRESO TRA UN RANGE DI PREZZI
+
+    SELECT * FROM prodotti WHERE prezzo BETWEEN 100 AND 900;
+
+
+//CALCOLARE IL PREZZO MEDIO PER CATEGORIA  
+
+    SELECT categoria AVG(prezzo) AS prezzo_medio     //(AVG = AVERAGE = media)
+    FROM prodotti
+    GROUP BY categoria;
+
+//AGGIORNARE LA QUANTITA AD UN PRODOTTO ESISTENTE
+
+    UPDATE prdotti
+    SET quantita = quantita +5
+    WHERE id = 4;
+
+
+//CANCELLIAMO IL PRODOTTO
+
+DELETE from prodotti WHERE id = 6;
+
+
+
+//----------------ESERCIZIO APPARTAMENTI----------------------
+
+//Creare db appartamenti, creare tabella, e inserire: id, interno, piano, metri_quadri, proprietario
+
+
+    creo db -> CREATE DATABASE appartamenti;
+
+    creo tabella ->  CREATE TABLE appartamenti (
+                     id INT AUTO_INCREMENT PRIMARY KEY,
+                     interno VARCHAR(10),
+                     piano INT,
+                     metri_quadri DECIMAL(6,2),
+                     proprietario VARCHAR(100)
+                    );
+
+//inserimento di dati, popolarlo
+
+                    INSERT INTO appartamenti (interno, piano, metri_quadri, proprietario)
+                    VALUES
+                    ('100', 1, 75.50, 'Pinco Pallo'),
+                    ('200', 2, 90.00, 'Paperino Qua'),
+                    ('201', 2, 120.00, 'Topolino Topo'),
+                    ('300', 3, 65.00, 'Pluto Bau'),
+                    ('101', 1, 85.00, 'Minnie Mouse'),
+                    ('303', 3, 82.00, 'Pietro Bau'),
+                    ('202', 2, 130.00, 'Paperon Paperoni');
+
+
+//mostrare tutti gli appartamenti
+
+    SELECT * FROM appartamenti;
+
+
+//mostrare gli appartamenti al 2 piano
+
+    SELECT * FROM appartamenti
+    WHERE piano = 2;
+
+
+
+//mostrare appartamenti con più di 80mq2
+
+    SELECT * FROM appartamenti
+    WHERE metri_quadri > 80;
+
+
+// mostrare solo interno e proprietario
+
+    SELECT interno, proprietario
+    FROM appartamenti;
+
+
+//ordinare gli appartamenti per metri_quadri dal più grande al più piccolo
+
+    SELECT * FROM appartamenti
+    ORDER BY metri_quadri DESC;
+
+//calcola la media dei metri_quadri
+
+    SELECT AVG(metri_quadri) AS media_metri_quadri
+    FROM appartamenti;
+
+
+//aggiornamento di un dato (metri_quadri)
+
+    UPDATE appartamenti
+    SET metri_quadri = 95.00
+    WHERE interno = '101';
+
+
+//cancellare un dato (un interno)
+
+    DELETE FROM appartamenti 
+    WHERE interno = '101';
+
+
+//cancellare appartamenti sotto gli 80mq2
+
+    DELETE FROM appartamenti
+    WHERE metri_quadri < 80;
