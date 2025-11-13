@@ -60,6 +60,12 @@ table th {
     
 }
 
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
 .buttonSave {
 
     display: inline-block;
