@@ -1,23 +1,26 @@
 <?php
-    require 'db.php';
+require 'db.php';
 
-    //se il form è stato inviato tramite POST
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// prendo l'id del contatto dalla query string, se esiste
+$contatto_id = $_GET['contatto_id'] ?? '';
 
-        $prodotto = $_POST['prodotto'];
-        $quantita = $_POST['quantita'];
-        $data_di_ordine = $_POST['data_di_ordine'];
-        $contatto = $_POST['contatto'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        //query di inserimento
-        $sql = "INSERT INTO ordini (prodotto, quantita, data_di_ordine, contatto) VALUES ('$prodotto', '$quantita', '$data_di_ordine', '$contatto')";
+    $prodotto = $_POST['prodotto'];
+    $quantita = $_POST['quantita'];
+    $data_di_ordine = $_POST['data_di_ordine'];
+    $contatto = $_POST['contatto']; // questo è il valore nascosto
 
-        mysqli_query($conn, $sql);
+    // query di inserimento
+    $sql = "INSERT INTO ordini (prodotto, quantita, data_di_ordine, contatto_id) 
+            VALUES ('$prodotto', '$quantita', '$data_di_ordine', '$contatto')";
 
-        //reindirizzo alla lista ordini
-        header("Location: ordini.php");
-        exit;
-    }
+    mysqli_query($conn, $sql);
+
+    // reindirizzo alla lista ordini
+    header("Location: ordini.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,21 +32,23 @@
     <title>Aggiungi ordine</title>
 </head>
 <body>
+<div class="container">
+    <h1>Aggiungi ordine</h1>
 
-    <div class="container">
-        <h1>Aggiungi ordine</h1>
+    <form action="" method="POST">
+        
+        Prodotto: <input type="text" name="prodotto" required>
+        Quantità: <input type="number" name="quantita" min="1" required>
+        Data di ordine: <input type="date" name="data_di_ordine" required>
 
-        <form action="" method="POST">
-            Prodotto: <input type="text" name="prodotto" required>
-            Quantità: <input type="number" name="quantita" min="1" required>
-            Data di ordine: <input type="date" name="data_di_ordine" required>
-            Contatto id: <input type="number" name="contatto" required>
+        
+        <input type="hidden" name="contatto" value="<?= htmlspecialchars($contatto_id) ?>">
 
-            <button type="submit">Salva</button>
-        </form>
+        <button type="submit" class="buttonSave">Salva</button>
 
-        <a href="ordini.php" class="button">Torna alla lista ordini</a>
-    </div>
+    </form>
 
+    <a href="ordini.php" class="button">Torna alla lista ordini</a>
+</div>
 </body>
 </html>

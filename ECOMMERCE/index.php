@@ -26,6 +26,7 @@
 
         <h1>Rubrica contatti</h1>
         <a href="aggiungi_contatto.php" class="button">Aggiungi contatto</a>
+        <a href="ordini.php" class="button">Vai su ordini</a>
     
 
         <table>
@@ -65,12 +66,11 @@
                     </td>
 
                     <td class="actions">
-
-                        <a href="modifica_contatto.php">🖊️</a>
-                        <a href="elimina_contatto.php">🗑️</a>
-                        <a href="ordini.php">📦</a>
-                    
+                        <a href="modifica_contatto.php?id=<?= $row['id'] ?>">🖊️</a>
+                        <a href="elimina_contatto.php?id=<?= $row['id'] ?>">🗑️</a>
+                        <a href="aggiungi_ordine.php?contatto_id=<?= $row['id'] ?>">📦</a>
                     </td>
+
                     
                 </tr>
                 <?php endwhile; ?>

@@ -59,3 +59,19 @@ table th {
     margin-right: 10px;
     
 }
+
+.buttonSave {
+
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 0;
+    background: rgb(53, 158, 11);;
+    border-radius: 4px;
+    text-decoration: none;
+    
+}
+
+.buttonSave:hover {
+
+    background: rgb(60, 255, 0);
+}

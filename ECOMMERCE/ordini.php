@@ -25,6 +25,7 @@
 
         <h1>Lista ordini</h1>
         <a href="aggiungi_ordine.php" class="button">Aggiungi ordine</a>
+        <a href="index.php" class="button">Torna ai contatti</a>
 
         <table>
             <thead>
@@ -51,7 +52,7 @@
                         <td>
                             <?= htmlspecialchars($rowOrdini['contatto_id']) ?>
                         </td>
-                        <td>
+                        <td class="actions">
                             <a href="modifica_ordine.php?id=<?= $rowOrdini['id'] ?>">🖊️</a>
                             <a href="elimina_ordine.php?id=<?= $rowOrdini['id'] ?>">🗑️</a>
                         </td>
