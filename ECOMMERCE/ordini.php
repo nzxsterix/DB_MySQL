@@ -54,7 +54,7 @@
                         </td>
                         <td class="actions">
                             <a href="modifica_ordine.php?id=<?= $rowOrdini['id'] ?>">🖊️</a>
-                            <a href="elimina_ordine.php?id=<?= $rowOrdini['id'] ?>">🗑️</a>
+                            <a href="elimina_ordine.php?id=<?= $rowOrdini['id'] ?>"onclick="return confirm('Eliminare questo ordine?');">🗑️</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
