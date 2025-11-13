@@ -5,10 +5,10 @@
 
     // controllo se il form è stato inviato
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $id = $_POST['id'] ?? null;
-        $nome = $_POST['nome'] ?? '';
-        $telefono = $_POST['telefono'] ?? '';
-        $email = $_POST['email'] ?? '';
+        $id = $_POST['id'];
+        $nome = $_POST['nome'];
+        $telefono = $_POST['telefono'];
+        $email = $_POST['email'];
 
         if ($id) {
 

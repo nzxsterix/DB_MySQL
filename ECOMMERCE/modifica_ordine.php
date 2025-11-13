@@ -1,13 +1,15 @@
 <?php
+    
     // importo la connessione col file db (db.php)
     require 'db.php';
 
+
     // controllo se il form è stato inviato
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $id = $_POST['id'] ?? null;
-        $prodotto = $_POST['prodotto'] ?? '';
-        $quantita = $_POST['quantita'] ?? '';
-        $data_di_ordine = $_POST['data_di_ordine'] ?? '';
+        $id = $_POST['id'];
+        $prodotto = $_POST['prodotto'];
+        $quantita = $_POST['quantita'];
+        $data_di_ordine = $_POST['data_di_ordine'];
         
         if ($id) {
             // aggiorno il database
@@ -41,6 +43,7 @@
 <body>
 
     <div class="container">
+
         <h1>Modifica Ordine</h1>
 
         <form method="POST">
