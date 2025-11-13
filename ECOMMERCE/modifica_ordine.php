@@ -54,8 +54,9 @@
             <input type="date" name="data_di_ordine" value="<?= htmlspecialchars($row['data_di_ordine']) ?>" required>
             <input type="hidden" name="contatto_id" value="<?= htmlspecialchars($row['contatto_id']) ?>">
 
-            <button type="submit" class="button">Salva</button>
+            <button type="submit" class="buttonSave">Salva</button>
         </form>
+        <a href="ordini.php" class="button">Torna alla lista ordini</a>
     </div>
 
 </body>

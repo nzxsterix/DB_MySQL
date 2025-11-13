@@ -56,8 +56,10 @@
             
             <input type="email" name="email" value="<?= htmlspecialchars($row['email']) ?>">
             
-            <button type="submit" class="button">salva</button>
+            <button type="submit" class="buttonSave">salva</button>
         </form>
+
+        <a href="index.php" class="button">Torna ai contatti</a>
     </div>
 
 </body>
