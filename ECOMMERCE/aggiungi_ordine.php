@@ -1,15 +1,17 @@
 <?php
 require 'db.php';
 
-// prendo l'id del contatto dalla query string, se esiste
+// prendo l'id del contatto dalla query 
 $contatto_id = $_GET['contatto_id'] ?? '';
 
+
+//recupero i dati dal form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $prodotto = $_POST['prodotto'];
     $quantita = $_POST['quantita'];
     $data_di_ordine = $_POST['data_di_ordine'];
-    $contatto = $_POST['contatto']; // questo è il valore nascosto
+    $contatto = $_POST['contatto']; // questo è il valore nascosto che non deve vedere l'utente quando aggiunge l'ordine
 
     // query di inserimento
     $sql = "INSERT INTO ordini (prodotto, quantita, data_di_ordine, contatto_id) 
@@ -17,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     mysqli_query($conn, $sql);
 
-    // reindirizzo alla lista ordini
+    // reindirizzo alla pagina di ordini
     header("Location: ordini.php");
     exit;
 }
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h1>Aggiungi ordine</h1>
 
     <form action="" method="POST">
-        
+
         Prodotto: <input type="text" name="prodotto" required>
         Quantità: <input type="number" name="quantita" min="1" required>
         Data di ordine: <input type="date" name="data_di_ordine" required>
