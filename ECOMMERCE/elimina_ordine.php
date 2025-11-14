@@ -10,6 +10,6 @@
     mysqli_query($conn, "DELETE FROM ordini WHERE id = $id");
 
     // dopo aver eliminato il contatto torna ad index.php
-    header("Location: index.php");
+    header("Location: ordini.php");
 
 ?>
