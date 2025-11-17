@@ -111,14 +111,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php if (count($clienti) > 0): ?>
                 <?php foreach ($clienti as $cliente): ?>
                     <tr>
-                        <td><?= htmlspecialchars($cliente['id']) ?></td>
-                        <td><?= htmlspecialchars($cliente['nome']) ?></td>
-                        <td><?= htmlspecialchars($cliente['cognome']) ?></td>
-                        <td><?= htmlspecialchars($cliente['email']) ?></td>
-                        <td><?= htmlspecialchars($cliente['telefono']) ?></td>
-                        <td><?= htmlspecialchars($cliente['nazione']) ?></td>
-                        <td><?= htmlspecialchars($cliente['codice_fiscale']) ?></td>
-                        <td><?= htmlspecialchars($cliente['documento']) ?></td>
+                        <td><?= $cliente['id'] ?></td>
+                        <td><?= $cliente['nome'] ?></td>
+                        <td><?= $cliente['cognome'] ?></td>
+                        <td><?= $cliente['email'] ?></td>
+                        <td><?= $cliente['telefono'] ?></td>
+                        <td><?= $cliente['nazione'] ?></td>
+                        <td><?= $cliente['codice_fiscale'] ?></td>
+                        <td><?= $cliente['documento'] ?></td>
                         <td>
                             <a href="editcliente.php?id=<?= $cliente['id'] ?>" class="btn btn-warning">Modifica</a>
                             <a href="deleteclienti.php?id=<?= $cliente['id'] ?>" class="btn btn-danger">Elimina</a>
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="9" class="text-center">Nessun cliente trovato</td>
+                    <td class="text-center">Nessun cliente trovato</td>
                 </tr>
             <?php endif; ?>
             </tbody>
