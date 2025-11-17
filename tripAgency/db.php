@@ -7,7 +7,7 @@
     $host = "localhost";        //HOSTNAME
     $user = "root";            //USERNAME
     $password = "";           //PASSWORD (viene chiesta durante installazione XAMPP)
-    $database = "ecommerce"; //NOME DATABASE di phpmyadmin
+    $database = "tripagency"; //NOME DATABASE di phpmyadmin
     
     //CREAZIONE DELLA CONNESSIONE
 

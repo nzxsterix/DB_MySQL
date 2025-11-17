@@ -1,9 +1,9 @@
     <?php include 'header.php'; ?>
     <?php include 'db.php'; ?>
 
-    <h2 class="mt-3 mb-3">Clienti</h2>
+    <h2 class="mt-3 mb-3">Destinazioni</h2>
 
-        <!--FORM-->
+        <!--form-->
         <div class="card mb-4 bg-light">
             <div class="card-body">
                 <form action="" method="POST">
@@ -55,6 +55,7 @@
                     <th>Prezzo</th>
                     <th>Data di partenza</th>
                     <th>Data di ritorno</th>
+                    <th>Azioni</th>
                 </tr>
             </thead>
             <tbody>
