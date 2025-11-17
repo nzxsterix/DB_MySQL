@@ -37,7 +37,7 @@
 
 <h2 class="mt-3 mb-3">Destinazioni</h2>
 
-<!-- Form per inserire una nuova destinazione -->
+<!-- Form-->
 <div class="card mb-4 bg-light">
     <div class="card-body">
         <form action="" method="POST">
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<!-- Tabella per visualizzare le destinazioni -->
+<!-- Tabella-->
 <table class="table table-striped">
     <thead>
         <tr>
@@ -99,8 +99,8 @@
                     <td><?= $destinazione['data_partenza'] ?></td>
                     <td><?= $destinazione['data_ritorno'] ?></td>
                     <td>
-                        <a href="editdestinazione.php?id=<?= $destinazione['id'] ?>" class="btn btn-warning">Modifica</a>
-                        <a href="deletedestinazione.php?id=<?= $destinazione['id'] ?>" class="btn btn-danger">Elimina</a>
+                        <a href="editdestinazione.php?id=<?= $destinazione['id'] ?>" class="btn btn-warning">🖊️</a>
+                        <a href="deletedestinazione.php?id=<?= $destinazione['id'] ?>" class="btn btn-danger">🗑️</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

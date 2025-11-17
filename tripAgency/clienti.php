@@ -120,8 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td><?= $cliente['codice_fiscale'] ?></td>
                         <td><?= $cliente['documento'] ?></td>
                         <td>
-                            <a href="editcliente.php?id=<?= $cliente['id'] ?>" class="btn btn-warning">Modifica</a>
-                            <a href="deleteclienti.php?id=<?= $cliente['id'] ?>" class="btn btn-danger">Elimina</a>
+                            <a href="editcliente.php?id=<?= $cliente['id'] ?>" class="btn btn-warning">🖊️</a>
+                            <a href="deleteclienti.php?id=<?= $cliente['id'] ?>" class="btn btn-danger">🗑️</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
