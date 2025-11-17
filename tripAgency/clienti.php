@@ -1,49 +1,51 @@
 <?php
-include 'header.php';
-include 'db.php';
+    include 'header.php';
+    include 'db.php';
 
-// verifica se il modulo è stato inviato
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
+    // Impostazioni per la paginazione
+    $perPagina = 10; // Mostro 10 risultati per pagina
+    $paginaCorrente = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; // Ottieni la pagina corrente (di default la prima)
+    $offset = ($paginaCorrente - 1) * $perPagina; // Calcola l'offset per la query
 
-    //preparo lo stato stmt
+    // Verifica se il modulo è stato inviato
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
 
-    $stmt = $conn->prepare("INSERT INTO clienti (nome, cognome, email, telefono, nazione, codice_fiscale, documento) 
-              VALUES (?, ?, ?, ?, ?, ?, ?)");
+        // Preparo lo stato stmt per l'inserimento cliente
+        $stmt = $conn->prepare("INSERT INTO clienti (nome, cognome, email, telefono, nazione, codice_fiscale, documento) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-    //bind dei parametri e tipizzo "in questo caso erano 7 stringhe 's'"
-    $stmt->bind_param("sssssss", $_POST["nome"], $_POST["cognome"], $_POST["email"], $_POST["telefono"],
-                         $_POST["nazione"], $_POST["codice_fiscale"], $_POST["documento"]);
-    //stato di esecuzione dello statement                     
-    $stmt->execute();
+        // Bind dei parametri e tipizzo "in questo caso erano 7 stringhe 's'"
+        $stmt->bind_param("sssssss", $_POST["nome"], $_POST["cognome"], $_POST["email"], $_POST["telefono"],
+                            $_POST["nazione"], $_POST["codice_fiscale"], $_POST["documento"]);
 
-    echo "<div class='alert alert-success'>Cliente Aggiunto</div>";
-
-    // recupera i dati dal form
-    $nome = $_POST['nome'];
-    $cognome = $_POST['cognome'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono'];
-    $nazione = $_POST['nazione'];
-    $codice_fiscale = $_POST['codice_fiscale'];
-    $documento = $_POST['documento'];
-
-    // inserisco i dati nel database
-    $query = "INSERT INTO clienti (nome, cognome, email, telefono, nazione, codice_fiscale, documento) 
-              VALUES ('$nome', '$cognome', '$email', '$telefono', '$nazione', '$codice_fiscale', '$documento')";
-
-    // eseguo la query
-    if (mysqli_query($conn, $query)) {
-        echo "Cliente aggiunto con successo";
-    } else {
-        echo "Errore: " . $query . mysqli_error($conn);
+        // Esecuzione dello statement
+        $stmt->execute();
+        echo "<div class='alert alert-success'>Cliente Aggiunto</div>";
     }
-}
 
+    // numero totale di clienti per la paginazione
+    $queryTotale = "SELECT COUNT(*) as t FROM clienti";
+    $resultTotale = $conn->query($queryTotale);
+    $total = $resultTotale->fetch_assoc()['t'];
+
+    // Calcola il numero totale di pagine
+    $totalPagine = ceil($total / $perPagina);
+
+    // clienti dal DB con ordinamento crescente per ID e 10$perPagina
+    $query = "SELECT * FROM clienti ORDER BY id ASC LIMIT $perPagina OFFSET $offset";
+    $result = mysqli_query($conn, $query);
+
+    $clienti = [];
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $clienti[] = $row;
+        }
+    }
 ?>
 
-<h2 class="mt-3 mb-3">Clienti</h2>
+    <h2 class="mt-3 mb-3">Clienti</h2>
 
-    <!-- Form di inserimento dati -->
+    <!-- Form-->
     <div class="card mb-4 bg-light">
         <div class="card-body">
             <form action="" method="POST">
@@ -92,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
         </div>
     </div>
 
-    <!-- tabella dei clienti -->
+    <!-- Tabella dei clienti -->
     <table class="table table-striped">
         <thead>
             <tr>
@@ -108,21 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
             </tr>
         </thead>
         <tbody>
-    <?php
-    // eseguo la query per recuperare i clienti dal DB
-        $query = "SELECT * FROM clienti";
-        $result = mysqli_query($conn, $query);
-
-        $clienti = [];
-        if (mysqli_num_rows($result) > 0) {
-            // recupero i risultati nella variabile $clienti
-            while ($row = mysqli_fetch_assoc($result)) {
-                $clienti[] = $row;
-            }
-        }
-    ?>
-
-    <?php if (count($clienti) > 0): ?>
+            <?php if (count($clienti) > 0): ?>
                 <?php foreach ($clienti as $cliente): ?>
                     <tr>
                         <td><?= $cliente['id'] ?></td>
@@ -144,8 +132,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
                     <td class="text-center">Nessun cliente trovato</td>
                 </tr>
             <?php endif; ?>
-            </tbody>
-        </table>
+        </tbody>
+    </table>
+
+    <!-- Paginazione -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $totalPagine; $i++): ?>
+                <li class="page-item <?= $i == $paginaCorrente ? 'active' : '' ?>">
+                    <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
 
 <?php include 'footer.php'; ?>
-
