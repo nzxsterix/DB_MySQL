@@ -2,7 +2,7 @@
     require 'db.php';
 
     // controllo se il form è stato inviato
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'];
         $nome = $_POST['nome'];
         $cognome = $_POST['cognome'];

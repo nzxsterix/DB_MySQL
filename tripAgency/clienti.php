@@ -3,7 +3,21 @@ include 'header.php';
 include 'db.php';
 
 // verifica se il modulo è stato inviato
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
+
+    //preparo lo stato stmt
+
+    $stmt = $conn->prepare("INSERT INTO clienti (nome, cognome, email, telefono, nazione, codice_fiscale, documento) 
+              VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+    //bind dei parametri e tipizzo "in questo caso erano 7 stringhe 's'"
+    $stmt->bind_param("sssssss", $_POST["nome"], $_POST["cognome"], $_POST["email"], $_POST["telefono"],
+                         $_POST["nazione"], $_POST["codice_fiscale"], $_POST["documento"]);
+    //stato di esecuzione dello statement                     
+    $stmt->execute();
+
+    echo "<div class='alert alert-success'>Cliente Aggiunto</div>";
+
     // recupera i dati dal form
     $nome = $_POST['nome'];
     $cognome = $_POST['cognome'];
