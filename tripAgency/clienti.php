@@ -1,92 +1,178 @@
-<?php
-    include 'header.php';
-    include 'db.php';
+<?php 
+    include 'header.php'; 
+    include 'db.php'; 
 
-    // Impostazioni per la paginazione
-    $perPagina = 10; // Mostro 10 risultati per pagina
-    $paginaCorrente = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; // Ottieni la pagina corrente (di default la prima)
-    $offset = ($paginaCorrente - 1) * $perPagina; // Calcola l'offset per la query
 
-    // Verifica se il modulo è stato inviato
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
+    //Logica per impaginazione
+    $perPagina = 10;  // n elementi mostrati per pagina
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $offset = ($page - 1) * $perPagina;
 
-        // Preparo lo stato stmt per l'inserimento cliente
+
+
+
+
+    //LOGICA DI AGGIUNTA
+    //chiamata POST che prende il gancio del bottone aggiugi del form, prendendo i valori inseriti nei vari campi
+    if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])){
+
+        //Preparo lo stato stmt -> statement 
         $stmt = $conn->prepare("INSERT INTO clienti (nome, cognome, email, telefono, nazione, codice_fiscale, documento) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)");
-
-        // Bind dei parametri e tipizzo "in questo caso erano 7 stringhe 's'"
-        $stmt->bind_param("sssssss", $_POST["nome"], $_POST["cognome"], $_POST["email"], $_POST["telefono"],
-                            $_POST["nazione"], $_POST["codice_fiscale"], $_POST["documento"]);
-
-        // Esecuzione dello statement
+                                VALUES  (?, ?, ?, ?, ?, ?, ?)");
+        //Binding dei parametri e tipizzo
+        $stmt->bind_param("sssssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['telefono'], $_POST['nazione'], $_POST['codice_fiscale'], $_POST['documento']);
+        
+        //eseguo lo statement
         $stmt->execute();
-        echo "<div class='alert alert-success'>Cliente Aggiunto</div>";
+
+        echo "<div class='alert alert-success'>Cliente Aggiunto!</div>";
+
+
+    }
+    
+
+
+
+
+    //LOGICA DI MODIFICA
+    $cliente_modifica = null;
+
+    if (isset($_GET['modifica'])){
+
+
+        $res = $conn->query("SELECT * FROM clienti WHERE id = " . intval($_GET['modifica']));
+
+        $cliente_modifica = $res->fetch_assoc();
+
     }
 
-    // numero totale di clienti per la paginazione
-    $queryTotale = "SELECT COUNT(*) as t FROM clienti";
-    $resultTotale = $conn->query($queryTotale);
-    $total = $resultTotale->fetch_assoc()['t'];
 
-    // Calcola il numero totale di pagine
-    $totalPagine = ceil($total / $perPagina);
 
-    // clienti dal DB con ordinamento crescente per ID e 10$perPagina
-    $query = "SELECT * FROM clienti ORDER BY id ASC LIMIT $perPagina OFFSET $offset";
-    $result = mysqli_query($conn, $query);
 
-    $clienti = [];
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $clienti[] = $row;
-        }
+
+    //MODIFICA DEL DATO, SALVATAGGIO 
+    if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['salva_modifica'])){
+
+        //PREPARE
+        $stmt = $conn->prepare("UPDATE clienti SET nome=?, cognome=?, email=?, telefono=?, nazione=?, codice_fiscale=?, documento=? WHERE id=?");
+        //BINDING
+        $stmt->bind_param("sssssssi" ,$_POST['nome'],$_POST['cognome'],$_POST['email'],$_POST['telefono'],$_POST['nazione'],$_POST['codice_fiscale'],$_POST['documento'], $_POST['id']);
+        //ESECUZIONE QUERY
+        $stmt->execute();
+        //messaggio
+        echo "<div class='alert alert-info'>Cliente Modificato correttamente</div>";
     }
-?>
 
-    <h2 class="mt-3 mb-3">Clienti</h2>
 
-    <!-- Form-->
+
+
+
+    //CANCELLAZIONE CLIENTE
+    if(isset($_GET['elimina'])){
+
+        $id = intval($_GET['elimina']);
+        $conn->query("DELETE FROM clienti WHERE id = $id");
+
+        echo "<div class='alert alert-info'>Cliente Cancellato correttamente</div>";
+    }
+
+    
+ ?>
+
+
+
+
+
+<h2>Clienti</h2>
+
+    <!--Form-->
     <div class="card mb-4 bg-light">
         <div class="card-body">
             <form action="" method="POST">
+
+                <?php if($cliente_modifica): ?>
+                
+                    <input type="hidden" name="id" value="<?= $cliente_modifica['id'] ?>">
+
+                <?php endif; ?>
+
                 <div class="row g-3">
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Nome :</label>
-                        <input type="text" name="nome" class="form-control" placeholder="Inserisci il nome" required>
+                        <label style="font-weight: 600;" for="">Nome : </label>
+                        
+                        <!--con value prendo il valore del campo inserito-->
+                        <input type="text" name="nome" class="form-control" placeholder="es.: Mario"
+                        
+                        
+                        value="<?= $cliente_modifica['nome'] ?? ''?>"
+                        
+                        required>
                     </div>
-
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Cognome :</label>
-                        <input type="text" name="cognome" class="form-control" placeholder="Inserisci il cognome" required>
-                    </div>
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Cognome : </label>
+                        <input type="text" name="cognome" class="form-control" placeholder="es.: Rossi" 
+                        
+                        value="<?= $cliente_modifica['cognome'] ?? ''?>"
 
+                        required>
+                    </div>
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Email :</label>
-                        <input type="email" name="email" class="form-control" placeholder="Inserisci l'email" required>
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Email : </label>
+                        <input type="text" name="email" class="form-control" placeholder="es.: mario.rossi@mail.it" 
+                        
+                        value="<?= $cliente_modifica['email'] ?? ''?>"
+                        
+                        required>
                     </div>
-
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Telefono :</label>
-                        <input type="text" name="telefono" class="form-control" placeholder="Inserisci il telefono" required>
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Telefono : </label>
+                        <input type="text" name="telefono" class="form-control" placeholder="es.: 393406587398" 
+                        
+                        value="<?= $cliente_modifica['telefono'] ?? ''?>"
+                        
+                        required>
                     </div>
-
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Nazione :</label>
-                        <input type="text" name="nazione" class="form-control" placeholder="Inserisci la nazione" required>
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Nazione : </label>
+                        <input type="text" name="nazione" class="form-control" placeholder="es.: Italia" 
+                        
+                        value="<?= $cliente_modifica['nazione'] ?? ''?>"
+                        
+                        required>
                     </div>
-
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Codice Fiscale :</label>
-                        <input type="text" name="codice_fiscale" class="form-control" placeholder="Inserisci il codice fiscale" required>
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Codice Fiscale : </label>
+                        <input type="text" name="codice_fiscale" class="form-control" placeholder="Codice Fiscale di 16 cifre..." 
+                        
+                        value="<?= $cliente_modifica['codice_fiscale'] ?? ''?>"
+                        
+                        required>
                     </div>
-
+                    
                     <div class="col-md-6">
-                        <label class="fw-bold">Documento :</label>
-                        <input type="text" name="documento" class="form-control" placeholder="Inserisci il nome del documento" required>
-                    </div>
+                        <label style="font-weight: 600; color: rgb(97, 137, 137);" for="">Documento : </label>
+                        <input type="file" name="documento" class="form-control" placeholder="Inserisci il codice del documento del cliente..." 
+                        
+                        value="<?= $cliente_modifica['documento'] ?? ''?>"
+                        >
 
-                    <div class="col-md-12">
-                        <button class="btn btn-success mt-3" type="submit">Salva</button>
+                    </div>
+                    
+                    <div class="col-12">
+                        
+                        <button 
+                            name="<?= $cliente_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
+                            class="btn <?= $cliente_modifica ? 'btn-warning' : 'btn-success' ?>" 
+                            type="submit">
+                            <?= $cliente_modifica ? 'Salva' : 'Aggiungi' ?>
+                        </button>
+                    
                     </div>
 
                 </div>
@@ -94,10 +180,31 @@
         </div>
     </div>
 
-    <!-- Tabella dei clienti -->
+
+
+    <!--LOGICA RENDER -->
+    <?php
+
+        //vado a conteggiare il totale dei clienti con query
+        $total = $conn->query("SELECT COUNT(*) as t FROM clienti")->fetch_assoc()['t'];
+        $totalPages = ceil($total / $perPagina); // il numero di pagine della navigazione
+
+        //QUERY PER ordinare i dati in modo DECRESCENTE IMPAGINATI PER valore di "$perPagina" 
+        $result = $conn->query("SELECT * FROM clienti ORDER BY id ASC LIMIT $perPagina OFFSET $offset");
+
+    ?>
+
+
+
+
+
+    <!--Tabella-->
     <table class="table table-striped">
+
         <thead>
+            <!--Intestazione tabella-->
             <tr>
+
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Cognome</th>
@@ -107,42 +214,57 @@
                 <th>Codice Fiscale</th>
                 <th>Documento</th>
                 <th>Azioni</th>
+
             </tr>
+
         </thead>
+        <!--Corpo tabella-->
         <tbody>
-            <?php if (count($clienti) > 0): ?>
-                <?php foreach ($clienti as $cliente): ?>
-                    <tr>
-                        <td><?= $cliente['id'] ?></td>
-                        <td><?= $cliente['nome'] ?></td>
-                        <td><?= $cliente['cognome'] ?></td>
-                        <td><?= $cliente['email'] ?></td>
-                        <td><?= $cliente['telefono'] ?></td>
-                        <td><?= $cliente['nazione'] ?></td>
-                        <td><?= $cliente['codice_fiscale'] ?></td>
-                        <td><?= $cliente['documento'] ?></td>
-                        <td>
-                            <a href="editcliente.php?id=<?= $cliente['id'] ?>" class="btn btn-warning">🖊️</a>
-                            <a href="deleteclienti.php?id=<?= $cliente['id'] ?>" class="btn btn-danger">🗑️</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+
+            <?php while ($row = $result->fetch_assoc()) : ?>
+                
                 <tr>
-                    <td class="text-center">Nessun cliente trovato</td>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= $row['nome'] ?></td>
+                    <td><?= $row['cognome'] ?></td>
+                    <td><?= $row['email'] ?></td>
+                    <td><?= $row['telefono'] ?></td>
+                    <td><?= $row['nazione'] ?></td>
+                    <td><?= $row['codice_fiscale'] ?></td>
+                    <td><?= $row['documento'] ?></td>
+                    <td>
+
+                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id']  ?>">🖊️</a>
+                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Sicuro?')">🗑️</a>
+
+
+                    </td>
                 </tr>
-            <?php endif; ?>
+
+
+            <?php endwhile; ?>
+
         </tbody>
+
     </table>
 
-    <!-- Paginazione -->
+
+
+    <!--Paginazione-->
     <nav>
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPagine; $i++): ?>
-                <li class="page-item <?= $i == $paginaCorrente ? 'active' : '' ?>">
-                    <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
-                </li>
+
+        <ul class="pagination">
+
+            <?php for($i = 1; $i <= $totalPages; $i++ ) : ?>
+
+                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                </li>   
+
             <?php endfor; ?>
+
+
+
         </ul>
     </nav>
 

@@ -1,81 +1,112 @@
-<?php include 'header.php'; ?>
-<?php include 'db.php'; ?>
+<?php 
+    include 'header.php'; 
+    include 'db.php'; 
 
-<?php
-    // Verifica se il modulo è stato inviato
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Recupera i dati dal form
-        $città = $_POST['città'];   // Usa 'città' con l'accento
-        $paese = $_POST['paese'];
-        $prezzo = $_POST['prezzo'];
-        $data_partenza = $_POST['data_partenza'];
-        $data_ritorno = $_POST['data_ritorno'];
+    // Logica per impaginazione
+    $perPagina = 10;  // Numero di elementi per pagina
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $offset = ($page - 1) * $perPagina;
 
-        // Inserisco i dati nel database
-        $query = "INSERT INTO destinazioni (città, paese, prezzo, data_partenza, data_ritorno) 
-                  VALUES ('$città', '$paese', '$prezzo', '$data_partenza', '$data_ritorno')";
+    // Logica di aggiunta
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
+        // Preparo lo statement per l'inserimento di una destinazione
+        $stmt = $conn->prepare("INSERT INTO destinazioni (città, paese, prezzo, data_partenza, data_ritorno) 
+                                VALUES (?, ?, ?, ?, ?)");
+        // Binding dei parametri
+        $stmt->bind_param("ssdss", $_POST['città'], $_POST['paese'], $_POST['prezzo'], $_POST['data_partenza'], $_POST['data_ritorno']);
+        
+        // Esecuzione dello statement
+        $stmt->execute();
 
-        if (mysqli_query($conn, $query)) {
-            echo "Destinazione aggiunta con successo";
-        } else {
-            echo "Errore: " . mysqli_error($conn);
-        }
+        echo "<div class='alert alert-success'>Destinazione Aggiunta!</div>";
     }
 
-    // Recupera tutte le destinazioni dal database
-    $query = "SELECT * FROM destinazioni";
-    $result = mysqli_query($conn, $query);
-
-    // Recupera i risultati in un array
-    $destinazioni = [];
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $destinazioni[] = $row;
-        }
+    // Logica di modifica
+    $destinazione_modifica = null;
+    if (isset($_GET['modifica'])) {
+        $res = $conn->query("SELECT * FROM destinazioni WHERE id = " . intval($_GET['modifica']));
+        $destinazione_modifica = $res->fetch_assoc();
     }
+
+    // Logica per il salvataggio delle modifiche
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['salva_modifica'])) {
+        // Preparo lo statement per aggiornare la destinazione
+        $stmt = $conn->prepare("UPDATE destinazioni SET città=?, paese=?, prezzo=?, data_partenza=?, data_ritorno=? WHERE id=?");
+        // Binding dei parametri
+        $stmt->bind_param("ssdssi", $_POST['città'], $_POST['paese'], $_POST['prezzo'], $_POST['data_partenza'], $_POST['data_ritorno'], $_POST['id']);
+        // Esecuzione dello statement
+        $stmt->execute();
+        
+        echo "<div class='alert alert-info'>Destinazione Modificata correttamente</div>";
+    }
+
+    // Logica di cancellazione
+    if (isset($_GET['elimina'])) {
+        $id = intval($_GET['elimina']);
+        $conn->query("DELETE FROM destinazioni WHERE id = $id");
+        echo "<div class='alert alert-info'>Destinazione cancellata correttamente</div>";
+    }
+
+    // Query per ottenere il totale delle destinazioni e la paginazione
+    $total = $conn->query("SELECT COUNT(*) as t FROM destinazioni")->fetch_assoc()['t'];
+    $totalPages = ceil($total / $perPagina); // Numero di pagine della navigazione
+
+    // Query per recuperare le destinazioni in ordine crescente, con paginazione
+    $result = $conn->query("SELECT * FROM destinazioni ORDER BY id ASC LIMIT $perPagina OFFSET $offset");
 ?>
 
-<h2 class="mt-3 mb-3">Destinazioni</h2>
+<h2>Destinazioni</h2>
 
-<!-- Form-->
+<!-- Form di inserimento e modifica destinazione -->
 <div class="card mb-4 bg-light">
     <div class="card-body">
         <form action="" method="POST">
+            <?php if ($destinazione_modifica): ?>
+                <input type="hidden" name="id" value="<?= $destinazione_modifica['id'] ?>">
+            <?php endif; ?>
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="fw-bold">Città :</label>
-                    <input type="text" name="città" class="form-control" placeholder="Inserisci il nome della città" required>
+                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Città: </label>
+                    <input type="text" name="città" class="form-control" placeholder="es.: Roma" 
+                           value="<?= $destinazione_modifica['città'] ?? '' ?>" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="fw-bold">Paese :</label>
-                    <input type="text" name="paese" class="form-control" placeholder="Inserisci il nome del paese" required>
+                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Paese: </label>
+                    <input type="text" name="paese" class="form-control" placeholder="es.: Italia" 
+                           value="<?= $destinazione_modifica['paese'] ?? '' ?>" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="fw-bold">Prezzo :</label>
-                    <input type="number" name="prezzo" class="form-control" placeholder="Inserisci il prezzo" required>
+                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Prezzo: </label>
+                    <input type="number" step="0.01" name="prezzo" class="form-control" placeholder="es.: 99.99" 
+                           value="<?= $destinazione_modifica['prezzo'] ?? '' ?>" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="fw-bold">Data di partenza :</label>
-                    <input type="date" name="data_partenza" class="form-control" required>
+                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Data di Partenza: </label>
+                    <input type="date" name="data_partenza" class="form-control" 
+                           value="<?= $destinazione_modifica['data_partenza'] ?? '' ?>" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="fw-bold">Data di ritorno :</label>
-                    <input type="date" name="data_ritorno" class="form-control" required>
+                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Data di Ritorno: </label>
+                    <input type="date" name="data_ritorno" class="form-control" 
+                           value="<?= $destinazione_modifica['data_ritorno'] ?? '' ?>" required>
                 </div>
 
-                <div class="col-md-12">
-                    <button class="btn btn-success mt-3" type="submit">Salva</button>
+                <div class="col-12">
+                    <button name="<?= $destinazione_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
+                            class="btn <?= $destinazione_modifica ? 'btn-warning' : 'btn-success' ?>" type="submit">
+                        <?= $destinazione_modifica ? 'Salva' : 'Aggiungi' ?>
+                    </button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<!-- Tabella-->
+<!-- Tabella delle destinazioni -->
 <table class="table table-striped">
     <thead>
         <tr>
@@ -83,33 +114,38 @@
             <th>Città</th>
             <th>Paese</th>
             <th>Prezzo</th>
-            <th>Data di partenza</th>
-            <th>Data di ritorno</th>
+            <th>Data Partenza</th>
+            <th>Data Ritorno</th>
             <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
-        <?php if (count($destinazioni) > 0): ?>
-            <?php foreach ($destinazioni as $destinazione): ?>
-                <tr>
-                    <td><?= $destinazione['id'] ?></td>
-                    <td><?= $destinazione['città'] ?></td>
-                    <td><?= $destinazione['paese'] ?></td>
-                    <td><?= $destinazione['prezzo'] ?> €</td>
-                    <td><?= $destinazione['data_partenza'] ?></td>
-                    <td><?= $destinazione['data_ritorno'] ?></td>
-                    <td>
-                        <a href="editdestinazione.php?id=<?= $destinazione['id'] ?>" class="btn btn-warning">🖊️</a>
-                        <a href="deletedestinazione.php?id=<?= $destinazione['id'] ?>" class="btn btn-danger">🗑️</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
+        <?php while ($row = $result->fetch_assoc()) : ?>
             <tr>
-                <td colspan="7" class="text-center">Nessuna destinazione trovata</td>
+                <td><?= $row['id'] ?></td>
+                <td><?= $row['città'] ?></td>
+                <td><?= $row['paese'] ?></td>
+                <td><?= $row['prezzo'] ?></td>
+                <td><?= $row['data_partenza'] ?></td>
+                <td><?= $row['data_ritorno'] ?></td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id'] ?>">🖊️</a>
+                    <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
+                </td>
             </tr>
-        <?php endif; ?>
+        <?php endwhile; ?>
     </tbody>
 </table>
+
+<!-- Paginazione -->
+<nav>
+    <ul class="pagination">
+        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+            </li>   
+        <?php endfor; ?>
+    </ul>
+</nav>
 
 <?php include 'footer.php'; ?>
