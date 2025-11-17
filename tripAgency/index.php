@@ -10,9 +10,9 @@
 
     <div class="d-flex align-items-center justify-content-center mb-5 flex-wrap">
 
-        <img src="./img/family.png" alt="" class="img-card">
-        <img src="./img/mappa.png" alt="" class="img-card">
-        <img src="./img/booking.png" alt="" class="img-card">
+        <img src="./img/family.png" alt="img famiglia" class="img-card">
+        <img src="./img/mappa.png" alt="img mappa" class="img-card">
+        <img src="./img/booking.png" alt="img booking" class="img-card">
 
     </div>
 
@@ -51,31 +51,5 @@
                         
         
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <?php include 'footer.php'; ?>
