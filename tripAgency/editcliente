@@ -1,8 +1,7 @@
 <?php
 include 'db.php';
-include 'header.php';
 
-// prendo l'id del cliente dall'url
+// prendo l'id del cliente dall'URL
 $id = $_GET['id'];
 
 // prendo i dati del cliente
@@ -32,7 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     mysqli_query($conn, $update);
 
+    // ritorna alla pagina clienti.php 
     header("Location: clienti.php");
+    
 }
 ?>
 
@@ -92,7 +93,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 
-
-    <?php include 'footer.php' ?>
 </body>
 </html>
