@@ -172,6 +172,7 @@
                             type="submit">
                             <?= $cliente_modifica ? 'Salva' : 'Aggiungi' ?>
                         </button>
+                        <a href="clienti.php" class="btn btn-secondary">Ritorna ad Aggiungi</a>
                     
                     </div>
 
@@ -253,7 +254,7 @@
     <!--Paginazione-->
     <nav>
 
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
 
             <?php for($i = 1; $i <= $totalPages; $i++ ) : ?>
 

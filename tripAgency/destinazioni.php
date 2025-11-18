@@ -10,10 +10,10 @@
     // Logica di aggiunta
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])) {
         // Preparo lo statement per l'inserimento di una destinazione
-        $stmt = $conn->prepare("INSERT INTO destinazioni (città, paese, prezzo, data_partenza, data_ritorno) 
-                                VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO destinazioni (città, paese, prezzo, data_partenza, data_ritorno, posti_disponibili) 
+                                VALUES (?, ?, ?, ?, ?, ?)");
         // Binding dei parametri
-        $stmt->bind_param("ssdss", $_POST['città'], $_POST['paese'], $_POST['prezzo'], $_POST['data_partenza'], $_POST['data_ritorno']);
+        $stmt->bind_param("ssdssi", $_POST['città'], $_POST['paese'], $_POST['prezzo'], $_POST['data_partenza'], $_POST['data_ritorno'], $_POST['posti_disponibili']);
         
         // Esecuzione dello statement
         $stmt->execute();
@@ -31,9 +31,19 @@
     // Logica per il salvataggio delle modifiche
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['salva_modifica'])) {
         // Preparo lo statement per aggiornare la destinazione
-        $stmt = $conn->prepare("UPDATE destinazioni SET città=?, paese=?, prezzo=?, data_partenza=?, data_ritorno=? WHERE id=?");
-        // Binding dei parametri
-        $stmt->bind_param("ssdssi", $_POST['città'], $_POST['paese'], $_POST['prezzo'], $_POST['data_partenza'], $_POST['data_ritorno'], $_POST['id']);
+        $stmt = $conn->prepare("UPDATE destinazioni SET città=?, paese=?, prezzo=?, data_partenza=?, data_ritorno=?, posti_disponibili=? WHERE id=?");
+
+        // Binding dei parametri CORRETTO
+        $stmt->bind_param("ssdssii", 
+            $_POST['città'], 
+            $_POST['paese'], 
+            $_POST['prezzo'], 
+            $_POST['data_partenza'], 
+            $_POST['data_ritorno'], 
+            $_POST['posti_disponibili'],
+            $_POST['id']
+        );
+
         // Esecuzione dello statement
         $stmt->execute();
         
@@ -57,95 +67,104 @@
 
 <h2>Destinazioni</h2>
 
-<!-- Form di inserimento e modifica destinazione -->
-<div class="card mb-4 bg-light">
-    <div class="card-body">
-        <form action="" method="POST">
-            <?php if ($destinazione_modifica): ?>
-                <input type="hidden" name="id" value="<?= $destinazione_modifica['id'] ?>">
-            <?php endif; ?>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Città: </label>
-                    <input type="text" name="città" class="form-control" placeholder="es.: Roma" 
-                           value="<?= $destinazione_modifica['città'] ?? '' ?>" required>
-                </div>
+    <!-- Form di inserimento e modifica destinazione -->
+    <div class="card mb-4 bg-light">
+        <div class="card-body">
+            <form action="" method="POST">
+                <?php if ($destinazione_modifica): ?>
+                    <input type="hidden" name="id" value="<?= $destinazione_modifica['id'] ?>">
+                <?php endif; ?>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Città: </label>
+                        <input type="text" name="città" class="form-control" placeholder="es.: Roma" 
+                            value="<?= $destinazione_modifica['città'] ?? '' ?>" required>
+                    </div>
 
-                <div class="col-md-6">
-                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Paese: </label>
-                    <input type="text" name="paese" class="form-control" placeholder="es.: Italia" 
-                           value="<?= $destinazione_modifica['paese'] ?? '' ?>" required>
-                </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Paese: </label>
+                        <input type="text" name="paese" class="form-control" placeholder="es.: Italia" 
+                            value="<?= $destinazione_modifica['paese'] ?? '' ?>" required>
+                    </div>
 
-                <div class="col-md-6">
-                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Prezzo: </label>
-                    <input type="number" step="0.01" name="prezzo" class="form-control" placeholder="es.: 99.99" 
-                           value="<?= $destinazione_modifica['prezzo'] ?? '' ?>" required>
-                </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Prezzo: </label>
+                        <input type="number" step="0.01" name="prezzo" class="form-control" placeholder="es.: 99.99" 
+                            value="<?= $destinazione_modifica['prezzo'] ?? '' ?>" required>
+                    </div>
 
-                <div class="col-md-6">
-                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Data di Partenza: </label>
-                    <input type="date" name="data_partenza" class="form-control" 
-                           value="<?= $destinazione_modifica['data_partenza'] ?? '' ?>" required>
-                </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Data di Partenza: </label>
+                        <input type="date" name="data_partenza" class="form-control" 
+                            value="<?= $destinazione_modifica['data_partenza'] ?? '' ?>" required>
+                    </div>
 
-                <div class="col-md-6">
-                    <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Data di Ritorno: </label>
-                    <input type="date" name="data_ritorno" class="form-control" 
-                           value="<?= $destinazione_modifica['data_ritorno'] ?? '' ?>" required>
-                </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Data di Ritorno: </label>
+                        <input type="date" name="data_ritorno" class="form-control" 
+                            value="<?= $destinazione_modifica['data_ritorno'] ?? '' ?>" required>
+                    </div>
 
-                <div class="col-12">
-                    <button name="<?= $destinazione_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
-                            class="btn <?= $destinazione_modifica ? 'btn-warning' : 'btn-success' ?>" type="submit">
-                        <?= $destinazione_modifica ? 'Salva' : 'Aggiungi' ?>
-                    </button>
+                    <div class="col-md-6">
+                        <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Posti disponibili </label>
+                        <input type="number" name="posti_disponibili" class="form-control" 
+                            value="<?= $destinazione_modifica['posti_disponibili'] ?? '' ?>" required>
+                    </div>
+
+                    <div class="col-12">
+                        <button name="<?= $destinazione_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
+                                class="btn <?= $destinazione_modifica ? 'btn-warning' : 'btn-success' ?>" type="submit">
+                            <?= $destinazione_modifica ? 'Salva' : 'Aggiungi' ?>
+                        </button>
+                        <a href="destinazioni.php" class="btn btn-secondary">Ritorna ad Aggiungi</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- Tabella delle destinazioni -->
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Città</th>
-            <th>Paese</th>
-            <th>Prezzo</th>
-            <th>Data Partenza</th>
-            <th>Data Ritorno</th>
-            <th>Azioni</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result->fetch_assoc()) : ?>
+    <!-- Tabella delle destinazioni -->
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= $row['città'] ?></td>
-                <td><?= $row['paese'] ?></td>
-                <td><?= $row['prezzo'] ?></td>
-                <td><?= $row['data_partenza'] ?></td>
-                <td><?= $row['data_ritorno'] ?></td>
-                <td>
-                    <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id'] ?>">🖊️</a>
-                    <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
-                </td>
+                <th>ID</th>
+                <th>Città</th>
+                <th>Paese</th>
+                <th>Prezzo</th>
+                <th>Data Partenza</th>
+                <th>Data Ritorno</th>
+                <th>Posti disponibili</th>
+                <th>Azioni</th>
             </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php while ($row = $result->fetch_assoc()) : ?>
+                <tr>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= $row['città'] ?></td>
+                    <td><?= $row['paese'] ?></td>
+                    <td><?= $row['prezzo'] ?></td>
+                    <td><?= $row['data_partenza'] ?></td>
+                    <td><?= $row['data_ritorno'] ?></td>
+                    <td><?= $row['posti_disponibili'] ?></td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id'] ?>">🖊️</a>
+                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
 
-<!-- Paginazione -->
-<nav>
-    <ul class="pagination">
-        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-            </li>   
-        <?php endfor; ?>
-    </ul>
-</nav>
+    <!-- Paginazione -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                </li>   
+            <?php endfor; ?>
+        </ul>
+    </nav>
 
 <?php include 'footer.php'; ?>
