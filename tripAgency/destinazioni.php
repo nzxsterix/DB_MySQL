@@ -71,9 +71,11 @@
     <div class="card mb-4 bg-light">
         <div class="card-body">
             <form action="" method="POST">
+
                 <?php if ($destinazione_modifica): ?>
                     <input type="hidden" name="id" value="<?= $destinazione_modifica['id'] ?>">
                 <?php endif; ?>
+
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label style="font-weight: 600;  color: rgb(97, 137, 137);" for="">Città: </label>
@@ -159,11 +161,13 @@
     <!-- Paginazione -->
     <nav>
         <ul class="pagination justify-content-center">
+
             <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                 </li>   
             <?php endfor; ?>
+            
         </ul>
     </nav>
 
