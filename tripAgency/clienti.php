@@ -163,17 +163,18 @@
                         >
 
                     </div>
-                    
+
                     <div class="col-12">
-                        
-                        <button 
-                            name="<?= $cliente_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
-                            class="btn <?= $cliente_modifica ? 'btn-warning' : 'btn-success' ?>" 
-                            type="submit">
+                            <button name="<?= $cliente_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
+                                class="btn <?= $cliente_modifica ? 'btn-warning' : 'btn-success' ?>" type="submit">
                             <?= $cliente_modifica ? 'Salva' : 'Aggiungi' ?>
                         </button>
-                        <a href="clienti.php" class="btn btn-secondary">Ritorna ad Aggiungi</a>
-                    
+                        
+                        <?php if ($cliente_modifica): ?>
+                            <a href="clienti.php" class="btn btn-secondary">
+                                Annulla Modifica
+                            </a>
+                        <?php endif; ?>
                     </div>
 
                 </div>

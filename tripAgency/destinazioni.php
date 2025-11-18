@@ -113,12 +113,17 @@
                             value="<?= $destinazione_modifica['posti_disponibili'] ?? '' ?>" required>
                     </div>
 
-                    <div class="col-12">
+                   <div class="col-12">
                         <button name="<?= $destinazione_modifica ? 'salva_modifica' : 'aggiungi' ?>" 
                                 class="btn <?= $destinazione_modifica ? 'btn-warning' : 'btn-success' ?>" type="submit">
                             <?= $destinazione_modifica ? 'Salva' : 'Aggiungi' ?>
                         </button>
-                        <a href="destinazioni.php" class="btn btn-secondary">Ritorna ad Aggiungi</a>
+                        
+                        <?php if ($destinazione_modifica): ?>
+                            <a href="destinazioni.php" class="btn btn-secondary">
+                                Annulla Modifica
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </form>
@@ -167,7 +172,7 @@
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                 </li>   
             <?php endfor; ?>
-            
+
         </ul>
     </nav>
 

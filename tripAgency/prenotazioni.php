@@ -191,10 +191,10 @@
                         <label style="font-weight: 600;" for="">Assicurazione: </label>
                         
                         <!--Logica ternaria dato assicurazione booleano/ tinyInt su Mysql trattato come int in php-->
-                        <input type="checkbox"  name="assicurazione" 
+                        <input type="radio"  name="assicurazione" 
                         
                         
-                        value="1" <?= ($prenotazione_modifica['assicurazione'] ?? 0) ? 'checked' : ''?>>
+                        value="1" <?= ($prenotazione_modifica['assicurazione'] ?? 0) ? '' : ''?>>
                         
                       
                     </div>
@@ -282,7 +282,7 @@
     <!--Paginazione-->
     <nav>
 
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
 
             <?php for($i = 1; $i <= $totalPages; $i++ ) : ?>
 
