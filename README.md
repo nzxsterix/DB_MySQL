@@ -12,6 +12,8 @@ novembre 2025 👨🏻‍💻
 
 ![Screenshot dell app](./img/Screenshot3.png)
 
+![Screenshot dell app](./img/Screenshot6.png)
+
 🖥️
 ```bash
 Avviare xampp poi far partire apache e my sql guardare pagina browser aperta seguire info.txt
