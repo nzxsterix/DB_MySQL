@@ -12,7 +12,6 @@ novembre 2025 👨🏻‍💻
 
 ![Screenshot dell app](./img/Screenshot3.png)
 
-![Screenshot dell app](./img/Screenshot6.png)
 
 🖥️
 ```bash
