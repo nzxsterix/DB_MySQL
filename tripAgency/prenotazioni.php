@@ -109,10 +109,10 @@
 
 
 
-<h2>Prenotazioni</h2>
+<h2 class="mt-3 mb-3">Prenotazioni</h2>
 
     <!--Form-->
-    <div class="card mb-4">
+    <div class="card cl mb-4 justify-content-center">
         <div class="card-body">
 
 
@@ -120,7 +120,7 @@
 
                 <div class="row g-3">
                     
-                    <div class="col-md-3">
+                    <div class="col-md-6">
 
                         <label style="font-weight: 600;" for="">Cliente: </label>
                         <select name="id_cliente" class="form-select" required>
@@ -135,28 +135,22 @@
                         
                     </div>
                     
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <label style="font-weight: 600;" for="">Destinazione: </label>
-                        <div class="wrapper">
+                        <div class="wrapper py-0">
                             <select name="id_destinazione" class="form-control" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
 
                                 <option value="">Seleziona Destinazione</option>
                                 <?php while ($d = $destinazioni->fetch_assoc()) : ?>
 
                                     <option value="<?= $d['id'] ?>"><?= $d['città'] . ' ' . $d['paese'] ?></option>
-
-
-
+                                    
                                 <?php endwhile; ?>
                             </select>
                         </div>    
-
-
                     </div>
-                    
-                   
-                    
-                    <div class="col-md-3">
+                        
+                    <div class="col-md-6">
                         <label style="font-weight: 600;" for="">Data Prenotazione: </label>
                         <input type="date" name="data_prenotazione" class="form-control" placeholder="" 
                         
@@ -165,9 +159,9 @@
                         required>
                     </div>
 
-                     <div class="col-md-3">
+                     <div class="col-md-6">
                         <label style="font-weight: 600;" for="">Acconto: </label>
-                        <input type="number" name="acconto" class="form-control" placeholder="" 
+                        <input type="number" name="acconto" class="form-control" placeholder="Es. 200" 
                         
                         value="<?= $prenotazione_modifica['acconto'] ?? ''?>"
                         
@@ -176,9 +170,9 @@
 
                    
                     
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <label style="font-weight: 600;" for="">Numero persone : </label>
-                        <input type="number" min ="1" name="numero_persone" class="form-control" placeholder="" 
+                        <input type="number" min ="1" name="numero_persone" class="form-control" placeholder="Es. 2" 
                         
                         value="<?= $prenotazione_modifica['numero_persone'] ?? ''?>"
                         
@@ -187,7 +181,7 @@
                     
 
 
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <label style="font-weight: 600;" for="">Assicurazione: </label>
                         
                         <!--Logica ternaria dato assicurazione booleano/ tinyInt su Mysql trattato come int in php-->
@@ -263,8 +257,8 @@
                     <td><?= $row['assicurazione'] ?></td>
                     <td>
 
-                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id']  ?>">Modifica</a>
-                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Sicuro?')">Elimina</a>
+                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id']  ?>">🖊️</a>
+                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Sicuro?')">🗑️</a>
 
 
                     </td>

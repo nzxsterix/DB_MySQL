@@ -8,19 +8,19 @@ html, body {
 
 body {
 
-    background-color: rgb(197, 187, 173);
+    background-color: #ff9e00;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 footer {
 
-    background-color: rgb(97, 137, 137);
+    background-color: #9d4edd;
 
 }
 
 .navbar {
 
-    background-color: rgb(97, 137, 137);
+    background-color: #9d4edd;
     box-shadow: 0, 2px, 4px rgb(0, 0, 0,4);
 }
 
@@ -65,7 +65,11 @@ h1, h2, h3 {
 /*Wrapper per select-option Destinazioni */
 .wrapper{
     
-    width:200px;
-    padding:20px;
-    height: 150px;
+    width:auto;
+    height: auto;
+}
+
+.cl {
+
+    background-color: #dedef8;
 }

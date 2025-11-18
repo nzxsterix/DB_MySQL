@@ -20,7 +20,7 @@
     <div class="row justify-content-center mb-4">
 
         <div class="col-md-4">
-            <div class="card shadow-sm">
+            <div class="card cl shadow-sm">
                 <div class="card-body text-center">
                    <h5 class="card-title">Clienti</h5>
                    <p class="card-text">Gestisci le informazioni dei tuoi clienti</p>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm">
+            <div class="card cl shadow-sm">
                 <div class="card-body text-center">
                    <h5 class="card-title">Destinazioni</h5>
                    <p class="card-text">Consulta o aggiungi nuove mete turistiche</p>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm">
+            <div class="card cl shadow-sm">
                 <div class="card-body text-center">
                    <h5 class="card-title">Prenotazioni</h5>
                    <p class="card-text">Visualizza e registra le prenotazioni dei tuoi clienti</p>

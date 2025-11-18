@@ -65,10 +65,10 @@
     $result = $conn->query("SELECT * FROM destinazioni ORDER BY id ASC LIMIT $perPagina OFFSET $offset");
 ?>
 
-<h2>Destinazioni</h2>
+<h2 class="mt-3 mb-3">Destinazioni</h2>
 
     <!-- Form di inserimento e modifica destinazione -->
-    <div class="card mb-4 bg-light">
+    <div class="card mb-4 cl">
         <div class="card-body">
             <form action="" method="POST">
 

@@ -83,10 +83,10 @@
 
 
 
-<h2>Clienti</h2>
+<h2 class="mt-3 mb-3">Clienti</h2>
 
     <!--Form-->
-    <div class="card mb-4 bg-light">
+    <div class="card mb-4 cl">
         <div class="card-body">
             <form action="" method="POST">
 
