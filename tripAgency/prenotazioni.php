@@ -110,8 +110,6 @@
 
                     <div class="col-md-6">
                         <label style="font-weight: 600;" for="">Assicurazione: </label>
-                        
-                        <!-- Se prenotazione_modifica['assicurazione'] è vuota o 0, lascia vuoto il campo -->
                         <input type="radio" name="assicurazione" value="1" 
                             <?= (isset($prenotazione_modifica) && $prenotazione_modifica['assicurazione'] == 1) ? 'checked' : '' ?>>
                         <label for="assicurazione">Sì</label>
@@ -176,4 +174,4 @@
         </ul>
     </nav>
 
-    <?php include 'footer.php'; ?>
+<?php include 'footer.php'; ?>
