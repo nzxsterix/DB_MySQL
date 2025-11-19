@@ -237,7 +237,7 @@
                     <td>
 
                         <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id']  ?>">🖊️</a>
-                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Sicuro?')">🗑️</a>
+                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Se cancelli il cliente anche la prenotazione verrà cancellata')">🗑️</a>
 
 
                     </td>

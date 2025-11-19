@@ -156,7 +156,7 @@
                     <td><?= $row['posti_disponibili'] ?></td>
                     <td>
                         <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id'] ?>">🖊️</a>
-                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
+                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Se cancelli la destinazione le prenotazioni verranno cancellate')">🗑️</a>
                     </td>
                 </tr>
             <?php endwhile; ?>
