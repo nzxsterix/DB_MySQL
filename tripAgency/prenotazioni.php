@@ -254,7 +254,7 @@
                     <td><?= $row['data_prenotazione'] ?></td>
                     <td><?= $row['acconto'] ?></td>
                     <td><?= $row['numero_persone'] ?></td>
-                    <td><?= $row['assicurazione'] ?></td>
+                    <td><?= $row['assicurazione'] ? 'Sì' : 'No' ?></td>
                     <td>
 
                         <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id']  ?>">🖊️</a>
