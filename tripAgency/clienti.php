@@ -4,7 +4,7 @@
 
 
     //Logica per impaginazione
-    $perPagina = 10;  // n elementi mostrati per pagina
+    $perPagina = 3;  // n elementi mostrati per pagina
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $offset = ($page - 1) * $perPagina;
 
@@ -281,6 +281,7 @@
 
 
      <!-- Paginazione -->
+    
     <nav class="mb-3">
         <ul class="pagination justify-content-center">
             <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
