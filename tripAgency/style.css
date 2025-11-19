@@ -1,6 +1,5 @@
 html, body {
-
-    width: 100%;
+    
     height: 100%;
     margin: 0;
     padding: 0;
@@ -16,6 +15,8 @@ body {
 footer {
 
     background-color: #9d4edd;
+    margin-top: auto;
+
 
 }
 

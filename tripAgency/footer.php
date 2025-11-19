@@ -1,6 +1,6 @@
 </main>  <!--chiusura main di header-->
 
-<footer class="text-center mt-5 p-2 fixed-bottom">
+<footer class="text-center  p-2 fixed-sticky">
 
     <small>Trip-Agency <?php echo date("Y"); ?></small>
 

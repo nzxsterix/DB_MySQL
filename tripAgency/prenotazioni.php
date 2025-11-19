@@ -4,7 +4,7 @@
 
 
     // Logica per impaginazione
-    $perPagina = 3;  // n elementi mostrati per pagina
+    $perPagina = 5;  // n elementi mostrati per pagina
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $offset = ($page - 1) * $perPagina;
 
@@ -107,7 +107,7 @@
     $result = $stmt->get_result();
 ?>
 
-<h2 class="mt-3 mb-3">Prenotazioni</h2>
+<h2 class="mt-3 mb-3 main">Prenotazioni</h2>
 
     <!-- Form -->
     <div class="card cl mb-4 justify-content-center">
@@ -208,7 +208,7 @@
     </table>
 
     <!-- Paginazione -->
-    <nav class="mb-3">
+    <nav class="mb-5">
         <ul class="pagination pagination_personal justify-content-center">
             <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">

@@ -3,7 +3,7 @@
     include 'db.php'; 
 
     // Logica per impaginazione
-    $perPagina = 3;  // Numero di elementi per pagina
+    $perPagina = 5;  // Numero di elementi per pagina
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $offset = ($page - 1) * $perPagina;
 
