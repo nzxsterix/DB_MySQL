@@ -196,7 +196,7 @@
 
     <!-- Paginazione -->
     <nav class="mb-3">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination pagination_personal justify-content-center">
 
             <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">
