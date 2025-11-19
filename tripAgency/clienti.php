@@ -280,21 +280,14 @@
 
 
 
-    <!--Paginazione-->
-    <nav>
-
+     <!-- Paginazione -->
+    <nav class="mb-3">
         <ul class="pagination justify-content-center">
-
-            <?php for($i = 1; $i <= $totalPages; $i++ ) : ?>
-
+            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                 </li>   
-
             <?php endfor; ?>
-
-
-
         </ul>
     </nav>
 
