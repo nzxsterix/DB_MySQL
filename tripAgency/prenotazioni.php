@@ -30,6 +30,20 @@
         $stmt->execute();
 
         echo "<div class='alert alert-success'>Prenotazione Aggiunta!</div>";
+
+         echo "
+            <script>
+    
+                setTimeout(function () {
+
+                    window.location.href = 'prenotazioni.php'
+
+                }, 3000);
+    
+            </script> ";
+
+        
+        exit;
     }
 
     // LOGICA DI MODIFICA
@@ -52,6 +66,20 @@
         $stmt->execute();
     
         echo "<div class='alert alert-info'>Prenotazione Modificata correttamente</div>";
+
+        echo "
+            <script>
+    
+                setTimeout(function () {
+
+                    window.location.href = 'prenotazioni.php'
+
+                }, 3000);
+    
+            </script> ";
+
+        
+        exit;
     }
 
     // CANCELLAZIONE CLIENTE
@@ -137,6 +165,11 @@
                         type="submit">
                         <?= $prenotazione_modifica ? 'Salva' : 'Aggiungi' ?>
                     </button>
+                    <?php if ($prenotazione_modifica): ?>
+                            <a href="prenotazioni.php" class="btn btn-secondary">
+                                Annulla Modifica
+                            </a>
+                    <?php endif; ?>
                 </div>
             </div>
             </form>

@@ -27,6 +27,20 @@
 
         echo "<div class='alert alert-success'>Cliente Aggiunto!</div>";
 
+         echo "
+            <script>
+    
+                setTimeout(function () {
+
+                    window.location.href = 'clienti.php'
+
+                }, 3000);
+    
+            </script> ";
+
+        
+        exit;
+
 
     }
     
@@ -61,6 +75,20 @@
         $stmt->execute();
         //messaggio
         echo "<div class='alert alert-info'>Cliente Modificato correttamente</div>";
+
+        echo "
+            <script>
+    
+                setTimeout(function () {
+
+                    window.location.href = 'clienti.php'
+
+                }, 3000);
+    
+            </script> ";
+
+        
+        exit;
     }
 
 

@@ -19,6 +19,20 @@
         $stmt->execute();
 
         echo "<div class='alert alert-success'>Destinazione Aggiunta!</div>";
+
+           echo "
+            <script>
+    
+                setTimeout(function () {
+
+                    window.location.href = 'destinazioni.php'
+
+                }, 3000);
+    
+            </script> ";
+
+        
+        exit;
     }
 
     // Logica di modifica
@@ -48,7 +62,24 @@
         $stmt->execute();
         
         echo "<div class='alert alert-info'>Destinazione Modificata correttamente</div>";
+
+        echo "
+            <script>
+    
+                setTimeout(function () {
+
+                    window.location.href = 'destinazioni.php'
+
+                }, 3000);
+    
+            </script> ";
+
+        
+        exit;
     }
+
+    
+
 
     // Logica di cancellazione
     if (isset($_GET['elimina'])) {
