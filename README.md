@@ -6,9 +6,7 @@ novembre 2025 👨🏻‍💻
 
 ![Screenshot dell app](./img/Screenshot2.png)
 
-![Screenshot dell app](./img/Screenshot4.png)
-
-![Screenshot dell app](./img/Screenshot5.png)
+![Screenshot dell app](./img/Screenshot6.png)
 
 ![Screenshot dell app](./img/Screenshot3.png)
 
