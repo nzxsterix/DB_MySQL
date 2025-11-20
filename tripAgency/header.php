@@ -1,3 +1,14 @@
+
+<?php 
+
+    //recupero il nome della pagina corrente
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    //questo restituisce la pagina corrente e evidenzia la nav
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -32,11 +43,11 @@
             <div class="collapse navbar-collapse align-items-end" id="navbarNav">
                 <div class="navbar-nav align-items-end item_right">
 
-                    <a class="nav-link" href="clienti.php">Clienti</a>
-                    <a class="nav-link" href="destinazioni.php">Destinazioni</a>
-                    <a class="nav-link" href="Prenotazioni.php">Prenotazioni</a>
-                    <a class="nav-link" href="Ricerca.php">Ricerca</a>
-                    <a class="nav-link" href="Statistiche.php">Statistiche</a>
+                    <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'clienti.php') ? 'active' : '' ?>" href="clienti.php">Clienti</a>
+                    <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'destinazioni.php') ? 'active' : '' ?>" href="destinazioni.php">Destinazioni</a>
+                    <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'Prenotazioni.php') ? 'active' : '' ?>" href="Prenotazioni.php">Prenotazioni</a>
+                    <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'Ricerca.php') ? 'active' : '' ?>" href="Ricerca.php">Ricerca</a>
+                    <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'Statistiche.php') ? 'active' : '' ?>" href="Statistiche.php">Statistiche</a>
 
                 </div>
             </div>

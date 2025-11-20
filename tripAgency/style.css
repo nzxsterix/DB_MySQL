@@ -110,6 +110,11 @@ table tr td, table tr th{
 
 }
 
+.nav-link.active {
+    
+    font-weight: bold;
+}
+
 @media (max-width: 992px) {
     .table-responsive {
         overflow-x: auto;
