@@ -229,54 +229,56 @@
 
 
     <!--Tabella-->
-    <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-striped">
 
-        <thead>
-            <!--Intestazione tabella-->
-            <tr>
-
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>Nazione</th>
-                <th>Codice Fiscale</th>
-                <th>Documento</th>
-                <th>Azioni</th>
-
-            </tr>
-
-        </thead>
-        <!--Corpo tabella-->
-        <tbody>
-
-            <?php while ($row = $result->fetch_assoc()) : ?>
-                
+            <thead>
+                <!--Intestazione tabella-->
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['nome'] ?></td>
-                    <td><?= $row['cognome'] ?></td>
-                    <td><?= $row['email'] ?></td>
-                    <td><?= $row['telefono'] ?></td>
-                    <td><?= $row['nazione'] ?></td>
-                    <td><?= $row['codice_fiscale'] ?></td>
-                    <td><?= $row['documento'] ?></td>
-                    <td>
 
-                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id']  ?>">🖊️</a>
-                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Se cancelli il cliente anche la prenotazione verrà cancellata')">🗑️</a>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Nazione</th>
+                    <th>Codice Fiscale</th>
+                    <th>Documento</th>
+                    <th>Azioni</th>
 
-
-                    </td>
                 </tr>
 
+            </thead>
+            <!--Corpo tabella-->
+            <tbody>
 
-            <?php endwhile; ?>
+                <?php while ($row = $result->fetch_assoc()) : ?>
+                    
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td><?= $row['nome'] ?></td>
+                        <td><?= $row['cognome'] ?></td>
+                        <td><?= $row['email'] ?></td>
+                        <td><?= $row['telefono'] ?></td>
+                        <td><?= $row['nazione'] ?></td>
+                        <td><?= $row['codice_fiscale'] ?></td>
+                        <td><?= $row['documento'] ?></td>
+                        <td>
 
-        </tbody>
+                            <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id']  ?>">🖊️</a>
+                            <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Se cancelli il cliente anche la prenotazione verrà cancellata')">🗑️</a>
 
-    </table>
+
+                        </td>
+                    </tr>
+
+
+                <?php endwhile; ?>
+
+            </tbody>
+
+        </table>
+    </div>
 
 
 

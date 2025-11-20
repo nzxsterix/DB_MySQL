@@ -162,37 +162,39 @@
     </div>
 
     <!-- Tabella delle destinazioni -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Città</th>
-                <th>Paese</th>
-                <th>Prezzo</th>
-                <th>Data Partenza</th>
-                <th>Data Ritorno</th>
-                <th>Posti disponibili</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $result->fetch_assoc()) : ?>
+     <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['città'] ?></td>
-                    <td><?= $row['paese'] ?></td>
-                    <td><?= $row['prezzo'] ?></td>
-                    <td><?= $row['data_partenza'] ?></td>
-                    <td><?= $row['data_ritorno'] ?></td>
-                    <td><?= $row['posti_disponibili'] ?></td>
-                    <td>
-                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id'] ?>">🖊️</a>
-                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Se cancelli la destinazione le prenotazioni verranno cancellate')">🗑️</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Città</th>
+                    <th>Paese</th>
+                    <th>Prezzo</th>
+                    <th>Data Partenza</th>
+                    <th>Data Ritorno</th>
+                    <th>Posti disponibili</th>
+                    <th>Azioni</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()) : ?>
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td><?= $row['città'] ?></td>
+                        <td><?= $row['paese'] ?></td>
+                        <td><?= $row['prezzo'] ?></td>
+                        <td><?= $row['data_partenza'] ?></td>
+                        <td><?= $row['data_ritorno'] ?></td>
+                        <td><?= $row['posti_disponibili'] ?></td>
+                        <td>
+                            <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id'] ?>">🖊️</a>
+                            <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Se cancelli la destinazione le prenotazioni verranno cancellate')">🗑️</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+     </div>
 
     <!-- Paginazione -->
     <nav class="mb-3">

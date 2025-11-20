@@ -177,35 +177,37 @@
     </div>
 
     <!-- Tabella -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Destinazione</th>
-                <th>Data</th>
-                <th>Acconto</th>
-                <th>Assicurazione</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $result->fetch_assoc()) : ?>
+     <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['nome'] . ' ' . $row['cognome'] ?></td>
-                    <td><?= $row['città'] ?></td>
-                    <td><?= $row['data_prenotazione'] ?></td>
-                    <td><?= $row['acconto'] ?></td>
-                    <td><?= $row['assicurazione'] ? 'Sì' : 'No' ?></td>
-                    <td>
-                        <a class="btn btn-sm btn-warning" href="?modifica=<?= $row['id'] ?>">🖊️</a>
-                        <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Destinazione</th>
+                    <th>Data</th>
+                    <th>Acconto</th>
+                    <th>Assicurazione</th>
+                    <th>Azioni</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()) : ?>
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td><?= $row['nome'] . ' ' . $row['cognome'] ?></td>
+                        <td><?= $row['città'] ?></td>
+                        <td><?= $row['data_prenotazione'] ?></td>
+                        <td><?= $row['acconto'] ?></td>
+                        <td><?= $row['assicurazione'] ? 'Sì' : 'No' ?></td>
+                        <td>
+                            <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id'] ?>">🖊️</a>
+                            <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Paginazione -->
     <nav class="mb-5">
