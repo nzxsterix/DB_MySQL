@@ -186,8 +186,8 @@
                     <th>Destinazione</th>
                     <th>Data</th>
                     <th>Acconto</th>
-                    <th>Assicurazione</th>
-                    <th>Azioni</th>
+                    <th class="text-center">Assicurazione</th>
+                    <th class="text-center">Azioni</th>
                 </tr>
             </thead>
             <tbody>
@@ -198,10 +198,10 @@
                         <td><?= $row['città'] ?></td>
                         <td><?= $row['data_prenotazione'] ?></td>
                         <td><?= $row['acconto'] ?></td>
-                        <td><?= $row['assicurazione'] ? 'Sì' : 'No' ?></td>
-                        <td>
+                        <td class="text-center"><?= $row['assicurazione'] ? 'Sì' : 'No' ?></td>
+                        <td class="text-center">
                             <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id'] ?>">🖊️</a>
-                            <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
+                            <a class="btn btn-sm btn-danger mb-2" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Sicuro?')">🗑️</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>

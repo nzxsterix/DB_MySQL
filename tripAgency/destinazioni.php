@@ -172,8 +172,8 @@
                     <th>Prezzo</th>
                     <th>Data Partenza</th>
                     <th>Data Ritorno</th>
-                    <th>Posti disponibili</th>
-                    <th>Azioni</th>
+                    <th class="text-center">Posti disponibili</th>
+                    <th class="text-center">Azioni</th>
                 </tr>
             </thead>
             <tbody>
@@ -185,10 +185,10 @@
                         <td><?= $row['prezzo'] ?></td>
                         <td><?= $row['data_partenza'] ?></td>
                         <td><?= $row['data_ritorno'] ?></td>
-                        <td><?= $row['posti_disponibili'] ?></td>
-                        <td>
+                        <td class="text-center"><?= $row['posti_disponibili'] ?></td>
+                        <td class="text-center">
                             <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id'] ?>">🖊️</a>
-                            <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Se cancelli la destinazione le prenotazioni verranno cancellate')">🗑️</a>
+                            <a class="btn btn-sm btn-danger mb-2" href="?elimina=<?= $row['id'] ?>" onclick="return confirm('Se cancelli la destinazione le prenotazioni verranno cancellate')">🗑️</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>

@@ -244,7 +244,7 @@
                     <th>Nazione</th>
                     <th>Codice Fiscale</th>
                     <th>Documento</th>
-                    <th>Azioni</th>
+                    <th class="text-center">Azioni</th>
 
                 </tr>
 
@@ -262,11 +262,11 @@
                         <td><?= $row['telefono'] ?></td>
                         <td><?= $row['nazione'] ?></td>
                         <td><?= $row['codice_fiscale'] ?></td>
-                        <td><?= $row['documento'] ?></td>
-                        <td>
+                        <td><?= substr($row['documento'], 0,10) ?></td>
+                        <td class="text-center">
 
                             <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id']  ?>">🖊️</a>
-                            <a class="btn btn-sm btn-danger" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Se cancelli il cliente anche la prenotazione verrà cancellata')">🗑️</a>
+                            <a class="btn btn-sm btn-danger mb-2" href="?elimina=<?= $row['id']  ?>" onclick="return confirm ('Se cancelli il cliente anche la prenotazione verrà cancellata')">🗑️</a>
 
 
                         </td>
