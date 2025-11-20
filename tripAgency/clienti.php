@@ -82,10 +82,24 @@
     //MODIFICA DEL DATO, SALVATAGGIO 
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['salva_modifica'])){
 
+
+        if(!empty($_FILES['documento']['name'])){
+
+            //estrae il nome del file senza percorso
+            //viene tolto il path e preso solo il nome del file
+            $NuovoDocumento = time() . "_" . basename($_FILES['documento']['name']); //nomefile
+            //sposto il file da cartella tmp alla cartella uploads/ 
+            move_uploaded_file($_FILES['documento']['tmp_name'], "uploads/" . $NuovoDocumento);
+
+        }else {
+
+            $NuovoDocumento = $_POST['documento_esistente'];
+        };
+
         //PREPARE
         $stmt = $conn->prepare("UPDATE clienti SET nome=?, cognome=?, email=?, telefono=?, nazione=?, codice_fiscale=?, documento=? WHERE id=?");
         //BINDING
-        $stmt->bind_param("sssssssi" ,$_POST['nome'],$_POST['cognome'],$_POST['email'],$_POST['telefono'],$_POST['nazione'],$_POST['codice_fiscale'],$_POST['documento'], $_POST['id']);
+        $stmt->bind_param("sssssssi" ,$_POST['nome'],$_POST['cognome'],$_POST['email'],$_POST['telefono'],$_POST['nazione'],$_POST['codice_fiscale'], $NuovoDocumento, $_POST['id']);
         //ESECUZIONE QUERY
         $stmt->execute();
         //messaggio
@@ -197,7 +211,14 @@
                         
                         required>
                     </div>
-                    
+
+
+                    <?php if ($cliente_modifica) : ?>
+
+                        <input type="hidden" name="documento_esistente" value="<?= $cliente_modifica['documento'] ?>"> 
+
+                    <?php endif;  ?>
+
                     <div class="col-md-6">
                         <label style="font-weight: 600; color: rgb(97, 137, 137);" for="">Documento : </label>
                         <input type="file" name="documento" class="form-control" placeholder="Inserisci il codice del documento del cliente..." 
@@ -280,7 +301,7 @@
                         <td class="text-center">
                             <?php if(!empty($row['documento'])) : ?>
 
-                                <a style="font-size: 1.4rem;" href="uploads/<?= $row>['documento'] ?>"
+                                <a style="font-size: 1.4rem; line-height: 1;" href="uploads/<?= $row>['documento'] ?>"
                                 
                                     download
                                     data-bs-toggle="tooltip"
@@ -289,7 +310,7 @@
                                 </a>
 
                             <?php else : ?>
-                                <span style="font-size: 1.4rem;">🗋</span>
+                                <span style="font-size: 1.4rem; line-height: 1;">🗋</span>
                             <?php endif ?>
                         </td>
                         <td class="text-center">
