@@ -16,6 +16,21 @@
     //chiamata POST che prende il gancio del bottone aggiugi del form, prendendo i valori inseriti nei vari campi
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['aggiungi'])){
 
+        $upload = null;
+
+        //controllo del documento se effetivamente esiste
+        //$_FILES contiene tutti i file caricati tramite input
+        //$_FILES['documento']['name'] nome originale scelto dal utente
+        //if(!empty) se non è vuoto quindi il file è stato caricato se è vuoto non si fa l'upload
+        if(!empty($_FILES['documento']['name'])){
+
+            //estrae il nome del file senza percorso
+            //viene tolto il path e preso solo il nome del file
+            $upload = time() . "_" . basename($_FILES['documento']['name']); //nomefile
+            //sposto il file da cartella tmp alla cartella uploads/ 
+            move_uploaded_file($_FILES['documento']['tmp_name'], "uploads/" . $upload);
+        };
+
         //Preparo lo stato stmt -> statement 
         $stmt = $conn->prepare("INSERT INTO clienti (nome, cognome, email, telefono, nazione, codice_fiscale, documento) 
                                 VALUES  (?, ?, ?, ?, ?, ?, ?)");
@@ -116,7 +131,7 @@
     <!--Form-->
     <div class="card mb-4 cl">
         <div class="card-body">
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
 
                 <?php if($cliente_modifica): ?>
                 
@@ -236,14 +251,14 @@
                 <!--Intestazione tabella-->
                 <tr>
 
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Cognome</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
-                    <th>Nazione</th>
-                    <th>Codice Fiscale</th>
-                    <th>Documento</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Nome</th>
+                    <th class="text-center">Cognome</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Telefono</th>
+                    <th class="text-center">Nazione</th>
+                    <th class="text-center">Codice Fiscale</th>
+                    <th class="text-center">Documento</th>
                     <th class="text-center">Azioni</th>
 
                 </tr>
@@ -255,14 +270,28 @@
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     
                     <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['nome'] ?></td>
-                        <td><?= $row['cognome'] ?></td>
-                        <td><?= $row['email'] ?></td>
-                        <td><?= $row['telefono'] ?></td>
-                        <td><?= $row['nazione'] ?></td>
-                        <td><?= $row['codice_fiscale'] ?></td>
-                        <td><?= substr($row['documento'], 0,10) ?></td>
+                        <td class="text-center"><?= $row['id'] ?></td>
+                        <td class="text-center"><?= $row['nome'] ?></td>
+                        <td class="text-center"><?= $row['cognome'] ?></td>
+                        <td class="text-center"><?= $row['email'] ?></td>
+                        <td class="text-center"><?= $row['telefono'] ?></td>
+                        <td class="text-center"><?= $row['nazione'] ?></td>
+                        <td class="text-center"><?= $row['codice_fiscale'] ?></td>
+                        <td class="text-center">
+                            <?php if(!empty($row['documento'])) : ?>
+
+                                <a href="uploads/<?= $row>['documento'] ?>"
+                                
+                                    download
+                                    data-bs-toggle="tooltip"
+                                    title="scarica : <?= $row>['documento'] ?>">🗎
+
+                                </a>
+
+                            <?php else : ?>
+                                <span>no documento</span>
+                            <?php endif ?>
+                        </td>
                         <td class="text-center">
 
                             <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id']  ?>">🖊️</a>

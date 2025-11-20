@@ -166,12 +166,12 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Città</th>
-                    <th>Paese</th>
-                    <th>Prezzo</th>
-                    <th>Data Partenza</th>
-                    <th>Data Ritorno</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Città</th>
+                    <th class="text-center">Paese</th>
+                    <th class="text-center">Prezzo</th>
+                    <th class="text-center">Data Partenza</th>
+                    <th class="text-center">Data Ritorno</th>
                     <th class="text-center">Posti disponibili</th>
                     <th class="text-center">Azioni</th>
                 </tr>
@@ -179,12 +179,12 @@
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['città'] ?></td>
-                        <td><?= $row['paese'] ?></td>
-                        <td><?= $row['prezzo'] ?></td>
-                        <td><?= $row['data_partenza'] ?></td>
-                        <td><?= $row['data_ritorno'] ?></td>
+                        <td class="text-center"><?= $row['id'] ?></td>
+                        <td class="text-center"><?= $row['città'] ?></td>
+                        <td class="text-center"><?= $row['paese'] ?></td>
+                        <td class="text-center"><?= $row['prezzo'] ?></td>
+                        <td class="text-center"><?= $row['data_partenza'] ?></td>
+                        <td class="text-center"><?= $row['data_ritorno'] ?></td>
                         <td class="text-center"><?= $row['posti_disponibili'] ?></td>
                         <td class="text-center">
                             <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id'] ?>">🖊️</a>

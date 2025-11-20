@@ -181,11 +181,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Destinazione</th>
-                    <th>Data</th>
-                    <th>Acconto</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Cliente</th>
+                    <th class="text-center">Destinazione</th>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Acconto</th>
                     <th class="text-center">Assicurazione</th>
                     <th class="text-center">Azioni</th>
                 </tr>
@@ -193,11 +193,11 @@
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['nome'] . ' ' . $row['cognome'] ?></td>
-                        <td><?= $row['città'] ?></td>
-                        <td><?= $row['data_prenotazione'] ?></td>
-                        <td><?= $row['acconto'] ?></td>
+                        <td class="text-center"><?= $row['id'] ?></td>
+                        <td class="text-center"><?= $row['nome'] . ' ' . $row['cognome'] ?></td>
+                        <td class="text-center"><?= $row['città'] ?></td>
+                        <td class="text-center"><?= $row['data_prenotazione'] ?></td>
+                        <td class="text-center"><?= $row['acconto'] ?></td>
                         <td class="text-center"><?= $row['assicurazione'] ? 'Sì' : 'No' ?></td>
                         <td class="text-center">
                             <a class="btn btn-sm btn-warning mb-2" href="?modifica=<?= $row['id'] ?>">🖊️</a>
