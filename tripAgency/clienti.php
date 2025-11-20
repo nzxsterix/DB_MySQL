@@ -280,7 +280,7 @@
                         <td class="text-center">
                             <?php if(!empty($row['documento'])) : ?>
 
-                                <a href="uploads/<?= $row>['documento'] ?>"
+                                <a style="font-size: 1.4rem;" href="uploads/<?= $row>['documento'] ?>"
                                 
                                     download
                                     data-bs-toggle="tooltip"
@@ -289,7 +289,7 @@
                                 </a>
 
                             <?php else : ?>
-                                <span>🗋</span>
+                                <span style="font-size: 1.4rem;">🗋</span>
                             <?php endif ?>
                         </td>
                         <td class="text-center">
