@@ -289,7 +289,7 @@
                                 </a>
 
                             <?php else : ?>
-                                <span>no documento</span>
+                                <span>🗋</span>
                             <?php endif ?>
                         </td>
                         <td class="text-center">
