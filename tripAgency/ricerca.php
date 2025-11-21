@@ -1,107 +1,103 @@
-<?php 
-    include 'header.php'; 
-    include 'db.php'; 
-    
-?>
+<?php  include 'header.php' ?>
 
-<?php 
+<?php  include 'db.php' ?>
+
+
+<?php
 
     //impaginazione
     $perPagina = 10;
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $offset = ($page - 1) * $perPagina;
 
-    //salvo in variabili la GET
 
-    $nome_cliente = $GET['nome_cliente'] ?? '';
-    $paese = $GET['paese'] ?? '';
-    $città = $GET['città'] ?? '';
-    $prezzo_max = $GET['prezzo_max'] ?? '';
-    $data = $GET['data'] ?? '';
+    //salvo in varibaili le GET
+
+    $nome_cliente = $_GET['nome_cliente'] ?? '';
+    $paese = $_GET['paese'] ?? '';
+    $città = $_GET['città'] ?? '';
+    $prezzo_max = $_GET['prezzo_max'] ?? '';
+    $data = $_GET['data'] ?? '';
     
 
-    //costruzione della query
 
-    $where = "WHERE 1=1"; //condizione sempre vera
-    $params = []; //contiene i valori per ? (placeholder della query)
-    $types = ''; //binding (sid..)
+    //Costruzione della QUERY
 
-    //se sto facendo la ricerca per nome
+    $where = "WHERE 1=1"; // PARTO DA UNA CONDIZIONE CHE è SEMPRE VERA
+    $params = []; //CONTIENE I VALORI PER ? (PLACEHOLDER DELLA QUERY)
+    $types = ''; // CONTINENE IL BINDING (ssid)
+
+    //Se sto facendo la ricerca per nome
     if($nome_cliente !== ''){
 
-        $where .= " AND (c.nome LIKE ? OR c.cognome LIKE ?";
-        $params[] = "%" . $nome_cliente . "%";
-        $types .= 's';
+        $where .= " AND (c.nome LIKE ? OR c.cognome LIKE ?)";
+        $params[] = "%$nome_cliente%";
+        $params[] = "%$nome_cliente%";
+        $types .= 'ss';
 
     }
-    //ricerca per paese
     if($paese !== ''){
 
         $where .= " AND (d.paese LIKE ?)";
-        $params[] = "%" . $paese . "%";
+        $params[] = "%$paese%";
         $types .= 's';
 
     }
-    //ricerca per città
     if($città !== ''){
 
         $where .= " AND (d.città LIKE ?)";
-        $params[] = "%" . $città . "%";
+        $params[] = "%$città%";
         $types .= 's';
 
     }
-     //ricerca per prezzo max
     if($prezzo_max !== ''){
 
-        $where .= " AND (d.prezzo <= ?)";
+        $where .= " AND (d.prezzo <= ? )";
         $params[] = floatval($prezzo_max);
         $types .= 'd';
 
     }
-     //ricerca per data
     if($data !== ''){
 
-        $where .= " AND (p.data_prenotazione = ?)";
+        $where .= " AND (p.data_prenotazione = ? )";
         $params[] = $data;
         $types .= 's';
 
     }
-    
-    //conteggio totale
+ 
 
-    $stmt =$conn->prepare("SELECT COUNT(*) AS total
+
+    //Conteggio totale
+    $stmt = $conn->prepare("SELECT COUNT(*) as total 
                             FROM prenotazioni p
-                            Join clienti c ON p.id_cliente = c.id
+                            JOIN clienti c ON p.id_cliente = c.id
                             JOIN destinazioni d ON p.id_destinazione = d.id
-                            $where    
-                        ");
-
+                            $where");
     if($types !== '') $stmt->bind_param($types, ...$params);
 
     $stmt->execute();
     $total = $stmt->get_result()->fetch_assoc()['total'];
     $totalPages = ceil($total / $perPagina);
 
-    //risultati impaginati
+
+    //Risultati impaginati
     $stmt = $conn->prepare("SELECT p.id, c.nome, c.cognome, d.città, d.paese, d.prezzo, p.data_prenotazione
                             FROM prenotazioni p
                             JOIN clienti c ON p.id_cliente = c.id
                             JOIN destinazioni d ON p.id_destinazione = d.id
-                            $where ORDER BY p.id DESC LIMIT ? OFFSET ?
-                         ");
+                            $where ORDER BY p.id DESC LIMIT ? OFFSET ?");
     
     $params[] = $perPagina;
     $params[] = $offset;
     $types .= "ii";
-        // Binding dei parametri
     $stmt->bind_param($types, ...$params);
-
     $stmt->execute();
     $result = $stmt->get_result();
 
 
 
 ?>
+
 
 <h2>Ricerca prenotazioni</h2>
 
@@ -115,8 +111,11 @@
                     <div class="col-md-6"><input type="text" name="città" value="<?= htmlspecialchars($città) ?>" class="form-control" placeholder="Città"></div>
                     <div class="col-md-6"><input type="number" name="prezzo_max" value="<?= htmlspecialchars($prezzo_max) ?>" class="form-control" placeholder="Prezzo max euro"></div>
                     <div class="col-md-6"><input type="date" name="data" value="<?= htmlspecialchars($data) ?>" class="form-control"></div>
-
-                    <button class="btn btn-primary">Cerca</button>
+                    
+                    <button class="btn btn-info">Cerca 🔍</button>
+                    
+                    <!--Anulla btn-->
+                    <a href="ricerca.php" class="btn btn-secondary">Annulla</a>
                 </div>
 
             </form>
