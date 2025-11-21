@@ -17,7 +17,7 @@
     </div>
 
      <!--SEZIONE CARD-->
-    <div class="row justify-content-center ms-1 me-1 g-1 mb-5">
+    <div class="row justify-content-center ms-5 me-5 g-3 mb-5">
 
         <div class="col-md-4">
             <div class="card cl shadow-sm h-100">
