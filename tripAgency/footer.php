@@ -2,7 +2,9 @@
 
 <footer class="text-center  p-2 fixed-sticky">
 
-    <small>Trip-Agency <?php echo date("Y"); ?></small>
+   <a class="align-items-center" href="index.php">
+                <img class="logo" src="./img/logo.png" alt=""></a> 
+                <small>Trip-Agency <?php echo date("Y"); ?></small>
 
 
 </footer>
