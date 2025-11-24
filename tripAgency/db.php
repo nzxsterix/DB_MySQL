@@ -1,24 +1,28 @@
 <?php
 
-    //CONNESSIONE AL DB MySQL USANDO MYSQLI
+    //CONNESSIONE AL DB MYSQL usando MYSQLI
 
-    //PARAMETRI DI CONNESSIONE AL DATABASE
+    //parametri di connessione al database
 
-    $host = "localhost";        //HOSTNAME
-    $user = "root";            //USERNAME
-    $password = "";           //PASSWORD (viene chiesta durante installazione XAMPP)
-    $database = "trip_agency"; //NOME DATABASE di phpmyadmin
-    
-    //CREAZIONE DELLA CONNESSIONE
+    $host = "localhost";  //host
+    $user = "root";       //utente standard di default -> root
+    $password = "";       // non abbiamo inserito nessuna password ( la chiede durante la installazione di XAMPP )
+    $database = "trip_agency"; //nome db su phpmyadmin
 
-    $conn = new mysqli($host, $user, $password, $database);
+    //creo la connessione
+    $conn = mysqli_connect($host, $user, $password, $database);
 
-    //CONTROLLO DELLA CONNESSIONE
+    //in caso di problemi usare con porta specificata :
+    //$conn = mysqli_connect($host, $user, $password, $database, 3306); //o la porta configurata nel vs pc
 
-    if (!$conn){
+    //verifico che la connessione funzioni 
 
-        //ERRORE NELLA CONNESSIONE stampa messaggio di errore e termina l'esecuzione dello script
+    if(!$conn){
+
+        //se la connessione fallisce  stampa un messaggi di errore e termina lo script
         die("Connessione fallita: " . mysqli_connect());
     }
 
+
+    
 ?>

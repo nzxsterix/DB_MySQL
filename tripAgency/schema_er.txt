@@ -38,3 +38,9 @@ CLIENTE -> PRENOTAZIONI:
 
 DESTINAZIONE -> PRENOTAZIONI
 1:N (una destinazione puo' essere prenotata da piu clienti)
+
+
+
+
+
+
